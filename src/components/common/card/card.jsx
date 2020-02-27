@@ -1,8 +1,7 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./card.css";
+import DotMenu from "../dotMenu/dotMenu";
 
 const Card = ({
   buttonText,
@@ -15,11 +14,7 @@ const Card = ({
   return (
     <div className={className ? "card " + className : "card"} {...rest}>
       <div className="card-body">
-        <FontAwesomeIcon
-          className="menu-dots"
-          icon={faEllipsisH}
-          size="large"
-        />
+        <DotMenu className="dot-menu" />
         <h5 className="card-title title-left" align="left">
           {title}
         </h5>

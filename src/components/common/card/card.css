@@ -16,16 +16,6 @@ p {
   text-align: left;
 }
 
-.menu-dots {
-  float: right;
-  opacity: 100%;
-  transition: 0.2s;
-}
-
-.menu-dots:hover {
-  opacity: 50%;
-}
-
 .btn-primary {
   background-color: #95c93d;
   border-color: #95c93d;
@@ -34,4 +24,8 @@ p {
 .btn-primary:hover {
   background-color: #65990d;
   border-color: #65990d;
+}
+
+a {
+  float: right;
 }
