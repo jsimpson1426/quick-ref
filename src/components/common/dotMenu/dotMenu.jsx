@@ -1,25 +1,36 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./dotMenu.css";
 
-const DotMenu = ({ listItems, className }) => {
-  return (
+const DotMenu = ({ listItems, ...rest }) => {
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
-      type="button"
       href
-      id="dropdownMenu2"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
+      ref={ref}
+      onClick={e => {
+        e.preventDefault();
+        onClick(e);
+      }}
     >
-      <FontAwesomeIcon
-        className={className ? "menu-dots " + className : "menu-dots"}
-        icon={faEllipsisH}
-        size="large"
-      />
+      <FontAwesomeIcon className="menu-dots" icon={faEllipsisH} size="large" />
     </a>
+  ));
+
+  return (
+    <Dropdown {...rest}>
+      <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {listItems.map(item => (
+          <Dropdown.Item id={item.text} href={item.url}>
+            {item.text}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 

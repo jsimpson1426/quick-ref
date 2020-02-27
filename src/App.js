@@ -10,7 +10,7 @@ function App() {
         title="Title One"
         description="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget"
         buttonLink="#"
-        className="m-2"
+        className="m-2 card-obj"
       />
     </div>
   );

@@ -11,10 +11,16 @@ const Card = ({
   className,
   ...rest
 }) => {
+  let items = [
+    { text: "Text 1", url: "#" },
+    { text: "Text 2", url: "#" },
+    { text: "Text 3", url: "#" }
+  ];
+
   return (
     <div className={className ? "card " + className : "card"} {...rest}>
       <div className="card-body">
-        <DotMenu className="dot-menu" />
+        <DotMenu listItems={items} className="dot-menu" />
         <h5 className="card-title title-left" align="left">
           {title}
         </h5>
