@@ -5,7 +5,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./dotMenu.css";
 
-const DotMenu = ({ listItems, ...rest }) => {
+const DotMenu = ({ listItems, menuDirection, ...rest }) => {
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
       href
@@ -20,7 +20,7 @@ const DotMenu = ({ listItems, ...rest }) => {
   ));
 
   return (
-    <Dropdown {...rest}>
+    <Dropdown alignRight {...rest}>
       <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
 
       <Dropdown.Menu>
