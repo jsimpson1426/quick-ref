@@ -1,16 +1,10 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./card.css";
+import Card from "react-bootstrap/Card";
+import "./myCard.sass";
 import DotMenu from "../dotMenu/dotMenu";
 
-const Card = ({
-  buttonText,
-  buttonLink,
-  description,
-  title,
-  className,
-  ...rest
-}) => {
+const myCard = ({ buttonText, buttonLink, description, title, ...rest }) => {
   let items = [
     { text: "Text 1", url: "#" },
     { text: "Text 2", url: "#" },
@@ -18,21 +12,19 @@ const Card = ({
   ];
 
   return (
-    <div className={className ? "card " + className : "card"} {...rest}>
-      <div className="card-body">
+    <Card {...rest}>
+      <Card.Body>
         <DotMenu listItems={items} className="dot-menu" />
-        <h5 className="card-title title-left" align="left">
-          {title}
-        </h5>
-        <p className="card-text">{description}</p>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>{description}</Card.Text>
         <div className="link-container">
           <a align="left" href={buttonLink} className="btn btn-primary">
             {buttonText}
           </a>
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 };
 
-export default Card;
+export default myCard;

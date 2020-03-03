@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import "./navBar.css";
+import "./navBar.sass";
 
 const NavBar = ({ navBrand, leftLinks, rightLinks, className, ...rest }) => {
   return (
@@ -18,14 +18,14 @@ const NavBar = ({ navBrand, leftLinks, rightLinks, className, ...rest }) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           {leftLinks.map(link => (
-            <Nav.Link className="navText" href={link.href} id={link.id}>
+            <Nav.Link className="navText" href={link.href} key={link.id}>
               {link.content}
             </Nav.Link>
           ))}
         </Nav>
         <Nav>
           {rightLinks.map(link => (
-            <Nav.Link href={link.href} id={link.id}>
+            <Nav.Link href={link.href} key={link.id}>
               {link.content}
             </Nav.Link>
           ))}

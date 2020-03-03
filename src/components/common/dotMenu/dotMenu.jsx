@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./dotMenu.css";
+import "./dotMenu.sass";
 
 const DotMenu = ({ listItems, menuDirection, ...rest }) => {
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -15,7 +15,7 @@ const DotMenu = ({ listItems, menuDirection, ...rest }) => {
         onClick(e);
       }}
     >
-      <FontAwesomeIcon className="menu-dots" icon={faEllipsisH} size="large" />
+      <FontAwesomeIcon className="menu-dots" icon={faEllipsisH} size="lg" />
     </a>
   ));
 
@@ -25,7 +25,7 @@ const DotMenu = ({ listItems, menuDirection, ...rest }) => {
 
       <Dropdown.Menu>
         {listItems.map(item => (
-          <Dropdown.Item id={item.text} href={item.url}>
+          <Dropdown.Item key={item.text} href={item.url}>
             {item.text}
           </Dropdown.Item>
         ))}
