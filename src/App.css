@@ -1,37 +1,3 @@
 .navText {
   color: white;
 }
-
-.card-obj {
-  min-width: 270px;
-  max-width: 270px;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.cards {
-  display: flex;
-  flex-direction: row;
-  flex-flow: wrap;
-  margin: auto;
-}
-
-@media (min-width: 1024px) {
-  .cards {
-    max-width: 960px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .cards {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 1px) and (max-width: 767px) {
-  .cards {
-    max-width: 320px;
-  }
-}
