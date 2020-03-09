@@ -1,1 +1,1 @@
-.card-obj{min-width:270px;max-width:270px;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px}.cards{display:flex;flex-direction:row;flex-flow:wrap;margin:auto}@media (min-width: 1024px){.cards{max-width:960px}}@media (min-width: 768px) and (max-width: 1023px){.cards{max-width:640px}}@media (min-width: 1px) and (max-width: 767px){.cards{max-width:320px}}
+.card-obj{min-width:270px;max-width:270px;margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:20px}.cards{display:flex;flex-direction:row;flex-flow:wrap}

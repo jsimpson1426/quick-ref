@@ -1,0 +1,15 @@
+.page-link {
+  background-color: #95c93d;
+  border-color: #6a6a6a;
+  color: #ffffff;
+}
+
+.page-link:hover {
+  background-color: #65990d;
+  border-color: #6a6a6a;
+  color: #ffffff;
+}
+
+.page-link:active {
+  background-color: #cde99d;
+}

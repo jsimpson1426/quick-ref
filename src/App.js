@@ -1,73 +1,30 @@
 import React, { Component } from "react";
 import NavBar from "./components/common/navBar/navBar";
 import CardCollection from "./components/common/cardCollection/cardCollection";
+import getResources from "./services/mock/resources";
+import Pagination from "./components/common/pagination/pagination";
+import { paginate } from "./utils/paginate";
 import "./App.sass";
 
 class App extends Component {
   state = {
-    cards: [
-      {
-        title: "Title One",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-      {
-        title: "Title Two",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-      {
-        title: "Title Three",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-
-      {
-        title: "Title Four",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-      {
-        title: "Title Five",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-      {
-        title: "Title Six",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-
-      {
-        title: "Title Seven",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      },
-      {
-        title: "Title Eight",
-        description:
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget",
-        buttonLink: "#",
-        buttonText: "View Material"
-      }
-    ]
+    cards: [],
+    pageSize: 6,
+    currentPage: 1
   };
+
+  componentDidMount() {
+    this.setState({ cards: getResources() });
+  }
+
+  handlePageChange = page => {
+    this.setState({ currentPage: page });
+  };
+
   render() {
-    let leftLinks = [
+    const { cards, pageSize, currentPage } = this.state;
+
+    const leftLinks = [
       {
         id: "search",
         content: <div className="navText">Search</div>
@@ -78,9 +35,11 @@ class App extends Component {
       }
     ];
 
-    let rightLinks = [
+    const rightLinks = [
       { id: "logout", content: <div className="navText">Logout</div> }
     ];
+
+    const pageOfCards = paginate(cards, currentPage, pageSize);
 
     return (
       <div className="App">
@@ -89,7 +48,16 @@ class App extends Component {
           leftLinks={leftLinks}
           rightLinks={rightLinks}
         ></NavBar>
-        <CardCollection cardList={this.state.cards}></CardCollection>
+        <div className="body-container">
+          <CardCollection cardList={pageOfCards}></CardCollection>
+          <Pagination
+            className="pagination"
+            currentPage={currentPage}
+            itemCount={cards.length}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+          ></Pagination>
+        </div>
       </div>
     );
   }

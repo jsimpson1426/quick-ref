@@ -7,6 +7,7 @@ const CardCollection = ({ cardList, className, ...rest }) => {
     <div className={className ? className + " cards" : "cards"}>
       {cardList.map(cardRow => (
         <MyCard
+          key={cardRow.title}
           buttonText={cardRow.buttonText}
           title={cardRow.title}
           description={cardRow.description}
