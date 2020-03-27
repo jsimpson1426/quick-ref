@@ -3,6 +3,7 @@ import NavBar from "./components/common/navBar/navBar";
 import CardCollection from "./components/common/cardCollection/cardCollection";
 import getResources from "./services/mock/resources";
 import Pagination from "./components/common/pagination/pagination";
+import SearchBar from "./components/common/searchBar/searchbar";
 import { paginate } from "./utils/paginate";
 import "./App.sass";
 
@@ -49,6 +50,7 @@ class App extends Component {
           rightLinks={rightLinks}
         ></NavBar>
         <div className="body-container">
+          <SearchBar />
           <CardCollection cardList={pageOfCards}></CardCollection>
           <Pagination
             className="pagination"
