@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import NavBar from "./components/common/navBar/navBar";
 import CardCollection from "./components/common/cardCollection/cardCollection";
 import getResources from "./services/mock/resources";
@@ -11,7 +12,8 @@ class App extends Component {
   state = {
     cards: [],
     pageSize: 6,
-    currentPage: 1
+    currentPage: 1,
+    searchValue: ""
   };
 
   componentDidMount() {
@@ -22,8 +24,18 @@ class App extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleSearchChange = value => {
+    const str = _.escapeRegExp(value);
+    const searchValue = new RegExp(str, "gi");
+    this.setState({ searchValue });
+  };
+
   render() {
     const { cards, pageSize, currentPage } = this.state;
+
+    const filteredCards = cards.filter(item => {
+      return item.title.match(this.state.searchValue);
+    });
 
     const leftLinks = [
       {
@@ -40,7 +52,7 @@ class App extends Component {
       { id: "logout", content: <div className="navText">Logout</div> }
     ];
 
-    const pageOfCards = paginate(cards, currentPage, pageSize);
+    const pageOfCards = paginate(filteredCards, currentPage, pageSize);
 
     return (
       <div className="App">
@@ -50,12 +62,15 @@ class App extends Component {
           rightLinks={rightLinks}
         ></NavBar>
         <div className="body-container">
-          <SearchBar />
+          <SearchBar
+            searchValue={this.state.searchValue}
+            onChange={this.handleSearchChange}
+          />
           <CardCollection cardList={pageOfCards}></CardCollection>
           <Pagination
             className="pagination"
             currentPage={currentPage}
-            itemCount={cards.length}
+            itemCount={filteredCards.length}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
           ></Pagination>

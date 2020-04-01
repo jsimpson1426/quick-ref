@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./searchbar.sass";
 
-const SearchBar = () => {
+const SearchBar = ({ searchValue, onChange }) => {
   return (
     <div className="input-group mb-3 m-4 sb">
       <input
@@ -10,12 +10,9 @@ const SearchBar = () => {
         className="form-control"
         placeholder="Search..."
         aria-describedby="button-addon2"
+        searchValue={searchValue}
+        onChange={e => onChange(e.currentTarget.value)}
       />
-      <div className="input-group-append">
-        <button className="btn btn-primary" type="button" id="button-addon2">
-          Submit
-        </button>
-      </div>
     </div>
   );
 };
