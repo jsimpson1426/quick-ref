@@ -7,52 +7,74 @@ import Pagination from "./components/common/pagination/pagination";
 import SearchBar from "./components/common/searchBar/searchbar";
 import { paginate } from "./utils/paginate";
 import "./App.sass";
+import ContentList from "./components/quick-ref/contentList/contentList";
+import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
 
 class App extends Component {
   state = {
     cards: [],
     pageSize: 6,
     currentPage: 1,
-    searchValue: ""
+    searchValue: "",
   };
 
   componentDidMount() {
     this.setState({ cards: getResources() });
   }
 
-  handlePageChange = page => {
+  handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
-  handleSearchChange = value => {
+  handleSearchChange = (value) => {
     const str = _.escapeRegExp(value);
     const searchValue = new RegExp(str, "gi");
-    this.setState({ searchValue });
+    this.setState({ searchValue, currentPage: 1 });
   };
 
   render() {
     const { cards, pageSize, currentPage } = this.state;
 
-    const filteredCards = cards.filter(item => {
+    const filteredCards = cards.filter((item) => {
       return item.title.match(this.state.searchValue);
     });
 
-    const leftLinks = [
-      {
-        id: "search",
-        content: <div className="navText">Search</div>
-      },
-      {
-        id: "add",
-        content: <div className="navText">Add Resource</div>
-      }
-    ];
+    const leftLinks = [];
 
     const rightLinks = [
-      { id: "logout", content: <div className="navText">Logout</div> }
+      {
+        id: "add",
+        content: <div className="navText">Add Resource</div>,
+      },
+      { id: "logout", content: <div className="navText">Logout</div> },
     ];
 
     const pageOfCards = paginate(filteredCards, currentPage, pageSize);
+
+    let cardOptions = [
+      { text: "Edit", url: "#" },
+      { text: "Delete", url: "#" },
+    ];
+
+    // return (
+    //   <div className="App">
+    //     <NavBar
+    //       navBrand={<div className="navText">Quick-Ref</div>}
+    //       leftLinks={leftLinks}
+    //       rightLinks={rightLinks}
+    //     ></NavBar>
+    //     <ContentList
+    //       searchValue={this.state.searchValue}
+    //       onChange={this.handleSearchChange}
+    //       cardList={pageOfCards}
+    //       cardItems={cardOptions}
+    //       currentPage={currentPage}
+    //       itemCount={filteredCards.length}
+    //       pageSize={pageSize}
+    //       onPageChange={this.handlePageChange}
+    //     />
+    //   </div>
+    // );
 
     return (
       <div className="App">
@@ -61,20 +83,7 @@ class App extends Component {
           leftLinks={leftLinks}
           rightLinks={rightLinks}
         ></NavBar>
-        <div className="body-container">
-          <SearchBar
-            searchValue={this.state.searchValue}
-            onChange={this.handleSearchChange}
-          />
-          <CardCollection cardList={pageOfCards}></CardCollection>
-          <Pagination
-            className="pagination"
-            currentPage={currentPage}
-            itemCount={filteredCards.length}
-            pageSize={pageSize}
-            onPageChange={this.handlePageChange}
-          ></Pagination>
-        </div>
+        <ResourceForm />
       </div>
     );
   }

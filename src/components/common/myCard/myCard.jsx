@@ -4,13 +4,14 @@ import Card from "react-bootstrap/Card";
 import "./myCard.sass";
 import DotMenu from "../dotMenu/dotMenu";
 
-const myCard = ({ buttonText, buttonLink, description, title, ...rest }) => {
-  let items = [
-    { text: "Text 1", url: "#" },
-    { text: "Text 2", url: "#" },
-    { text: "Text 3", url: "#" }
-  ];
-
+const myCard = ({
+  buttonText,
+  buttonLink,
+  description,
+  title,
+  items,
+  ...rest
+}) => {
   return (
     <Card {...rest}>
       <Card.Body>
