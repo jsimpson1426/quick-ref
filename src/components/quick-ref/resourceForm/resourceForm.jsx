@@ -10,16 +10,17 @@ class ResourceForm extends Component {
       tagInput: "",
     },
     errors: {},
-    fileToUpload: "",
     tags: [],
+    tagsErrors: "",
+    fileToUpload: "",
   };
 
   schema = {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
-    description: Joi.string().required().max(1024).label("Description"),
+    description: Joi.string().allow("").max(1024).label("Description"),
     file: Joi.string().required().label("File"),
-    tagInput: Joi.string().max(64).label("Tag"),
+    tagInput: Joi.string().allow("").optional().max(64).label("Tag"),
   };
 
   validate = () => {
@@ -41,10 +42,18 @@ class ResourceForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.data.file);
+
+    const errors = this.validate();
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+
+    this.doSubmit();
   };
 
+  doSubmit = () => {};
+
   handleChange = ({ currentTarget: input }) => {
+    const tagsErrors = "";
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
     if (errorMessage) errors[input.name] = errorMessage;
@@ -53,14 +62,11 @@ class ResourceForm extends Component {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
-    this.setState({ data, errors });
+    this.setState({ data, errors, tagsErrors });
   };
 
-  // fileChangeHandler = (event) => {
-  //   this.setState({ file: event.target.files[0] });
-  // };
-
   fileChangeHandler = (event) => {
+    const tagsErrors = "";
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(event.currentTarget);
     if (errorMessage) errors[event.currentTarget.name] = errorMessage;
@@ -69,8 +75,53 @@ class ResourceForm extends Component {
     const data = { ...this.state.data };
     data[event.currentTarget.name] = event.currentTarget.value;
 
-    this.setState({ data, errors });
-    this.setState({ file: event.target.files[0] });
+    this.setState({
+      data,
+      errors,
+      tagsErrors,
+      fileToUpload: event.target.files[0],
+    });
+  };
+
+  tagHandler = () => {
+    let data = { ...this.state.data };
+    let tags = this.state.tags ? [...this.state.tags] : [];
+    let tagsErrors = "";
+    if (tags.find((tag) => tag === data.tagInput.toLowerCase())) {
+      tagsErrors = "New tags must be unique.";
+    } else if (tags.length >= 5) {
+      tagsErrors = "The max number of tags is five.";
+    } else {
+      tags.push(data.tagInput.toLowerCase());
+      data.tagInput = "";
+    }
+    this.setState({ data, tags, tagsErrors });
+  };
+
+  handleDelete = (value) => {
+    let startTags = this.state.tags ? [...this.state.tags] : [];
+    if (!startTags) return;
+    const tags = startTags.filter((tag) => tag !== value);
+    this.setState({ tags });
+  };
+
+  renderTags = () => {
+    const tags = this.state.tags;
+    if (!tags) return;
+
+    return (
+      <div>
+        {tags.map((tag) => (
+          <span
+            className="badge badge-primary m-2"
+            key={tag}
+            onClick={() => this.handleDelete(tag)}
+          >
+            <b>x</b> {tag}
+          </span>
+        ))}
+      </div>
+    );
   };
 
   renderFileInput = () => {};
@@ -118,21 +169,38 @@ class ResourceForm extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="tagInput">Tags (optional)</label>
-            <input
-              name="tagInput"
-              id="tagInput"
-              className="form-control"
-              value={data.tagInput}
-              onChange={this.handleChange}
-            />
+            <div className="input-group">
+              <input
+                name="tagInput"
+                id="tagInput"
+                className="form-control"
+                value={data.tagInput}
+                onChange={this.handleChange}
+                aria-describedby="basic-addon2"
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn btn-primary"
+                  type="button"
+                  disabled={errors.tagInput}
+                  onClick={this.tagHandler}
+                >
+                  Add Tag
+                </button>
+              </div>
+            </div>
             {errors.tagInput && (
               <div className="alert alert-danger">{errors.tagInput}</div>
+            )}
+            {this.renderTags()}
+            {this.state.tagsErrors && (
+              <div className="alert alert-danger">{this.state.tagsErrors}</div>
             )}
           </div>
           <button
             disabled={this.validate()}
             className={
-              this.validate() ? "btn btn-primary" : "btn btn-secondary"
+              !this.validate() ? "btn btn-primary" : "btn btn-secondary"
             }
           >
             Upload
