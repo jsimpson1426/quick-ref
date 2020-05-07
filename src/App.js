@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import { Switch, Route, Link } from "react-router-dom";
 import NavBar from "./components/common/navBar/navBar";
 import CardCollection from "./components/common/cardCollection/cardCollection";
-import getResources from "./services/mock/resources";
+import { getResources } from "./services/mock/resources";
 import Pagination from "./components/common/pagination/pagination";
 import SearchBar from "./components/common/searchBar/searchbar";
 import { paginate } from "./utils/paginate";
@@ -32,6 +33,24 @@ class App extends Component {
     this.setState({ searchValue, currentPage: 1 });
   };
 
+  handleDelete = (id) => {
+    let cards = [...this.state.cards];
+    cards = cards.filter((card) => card._id !== id);
+    this.setState({ cards });
+  };
+
+  renderEdit = (id) => {
+    return <Link to={`/manageResource/${id}`}>Edit</Link>;
+  };
+
+  renderDelete = (id) => {
+    return (
+      <button className="btn btn-primary" onClick={() => this.handleDelete(id)}>
+        Delete
+      </button>
+    );
+  };
+
   render() {
     const { cards, pageSize, currentPage } = this.state;
 
@@ -52,29 +71,9 @@ class App extends Component {
     const pageOfCards = paginate(filteredCards, currentPage, pageSize);
 
     let cardOptions = [
-      { text: "Edit", url: "#" },
-      { text: "Delete", url: "#" },
+      { key: "Edit", content: this.renderEdit },
+      { key: "Delete", content: this.renderDelete },
     ];
-
-    // return (
-    //   <div className="App">
-    //     <NavBar
-    //       navBrand={<div className="navText">Quick-Ref</div>}
-    //       leftLinks={leftLinks}
-    //       rightLinks={rightLinks}
-    //     ></NavBar>
-    //     <ContentList
-    //       searchValue={this.state.searchValue}
-    //       onChange={this.handleSearchChange}
-    //       cardList={pageOfCards}
-    //       cardItems={cardOptions}
-    //       currentPage={currentPage}
-    //       itemCount={filteredCards.length}
-    //       pageSize={pageSize}
-    //       onPageChange={this.handlePageChange}
-    //     />
-    //   </div>
-    // );
 
     return (
       <div className="App">
@@ -83,7 +82,28 @@ class App extends Component {
           leftLinks={leftLinks}
           rightLinks={rightLinks}
         ></NavBar>
-        <ResourceForm />
+        <Switch>
+          <Route
+            path="/manageResource/:id"
+            render={(props) => <ResourceForm {...props} />}
+          />
+          <Route
+            path="/"
+            render={(props) => (
+              <ContentList
+                searchValue={this.state.searchValue}
+                onChange={this.handleSearchChange}
+                cardList={pageOfCards}
+                cardItems={cardOptions}
+                currentPage={currentPage}
+                itemCount={filteredCards.length}
+                pageSize={pageSize}
+                onPageChange={this.handlePageChange}
+                {...props}
+              />
+            )}
+          />
+        </Switch>
       </div>
     );
   }

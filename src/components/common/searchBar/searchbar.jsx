@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./searchbar.sass";
 
-const SearchBar = ({ searchValue, onChange, className }) => {
+const SearchBar = ({ searchvalue, onChange, className }) => {
   return (
     <div
       className={
@@ -16,7 +16,7 @@ const SearchBar = ({ searchValue, onChange, className }) => {
         className="form-control"
         placeholder="Search..."
         aria-describedby="button-addon2"
-        searchValue={searchValue}
+        searchvalue={searchvalue}
         onChange={(e) => onChange(e.currentTarget.value)}
       />
     </div>

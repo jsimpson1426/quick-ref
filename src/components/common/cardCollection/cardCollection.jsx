@@ -5,13 +5,14 @@ import "./cardCollection.sass";
 const CardCollection = ({ cardList, className, cardItems, ...rest }) => {
   return (
     <div className={className ? className + " cards" : "cards"}>
-      {cardList.map((cardRow) => (
+      {cardList.map((card) => (
         <MyCard
-          key={cardRow.title}
-          buttonText={cardRow.buttonText}
-          title={cardRow.title}
-          description={cardRow.description}
-          buttonLink={cardRow.buttonLink}
+          key={card._id}
+          buttonText={"View Material"}
+          cardData={card}
+          // title={card.title}
+          // description={card.description}
+          // buttonLink={`/viewResource/${card._id}`}
           className="card-obj"
           items={cardItems}
         />

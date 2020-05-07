@@ -4,7 +4,7 @@ import CardCollection from "../../common/cardCollection/cardCollection";
 import Pagination from "../../common/pagination/pagination";
 
 const ContentList = ({
-  searchValue,
+  searchvalue,
   onChange,
   cardList,
   cardItems,
@@ -13,9 +13,17 @@ const ContentList = ({
   pageSize,
   onPageChange,
 }) => {
+  if (cardList.length === 0)
+    return (
+      <div className="body-container">
+        <SearchBar searchvalue={searchvalue} onChange={onChange} />
+        <h1>No resources currently available.</h1>
+      </div>
+    );
+
   return (
     <div className="body-container">
-      <SearchBar searchValue={searchValue} onChange={onChange} />
+      <SearchBar searchvalue={searchvalue} onChange={onChange} />
       <CardCollection
         cardList={cardList}
         cardItems={cardItems}

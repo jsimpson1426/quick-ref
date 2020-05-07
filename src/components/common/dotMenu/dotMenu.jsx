@@ -5,12 +5,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./dotMenu.sass";
 
-const DotMenu = ({ listItems, menuDirection, ...rest }) => {
+const DotMenu = ({ listItems, menuDirection, cardID, ...rest }) => {
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
       href
       ref={ref}
-      onClick={e => {
+      onClick={(e) => {
         e.preventDefault();
         onClick(e);
       }}
@@ -22,12 +22,11 @@ const DotMenu = ({ listItems, menuDirection, ...rest }) => {
   return (
     <Dropdown alignRight {...rest}>
       <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
-
       <Dropdown.Menu>
-        {listItems.map(item => (
-          <Dropdown.Item key={item.text} href={item.url}>
-            {item.text}
-          </Dropdown.Item>
+        {listItems.map((item) => (
+          <div className="dropdown-item" key={item.key}>
+            {item.content(cardID)}
+          </div>
         ))}
       </Dropdown.Menu>
     </Dropdown>

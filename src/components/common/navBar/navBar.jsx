@@ -1,37 +1,40 @@
 import React from "react";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import "./navBar.sass";
+import { Link } from "react-router-dom";
 
 const NavBar = ({ navBrand, leftLinks, rightLinks, className, ...rest }) => {
   return (
-    <Navbar
-      collapseOnSelect
-      className={className ? className + " topNav" : "topNav"}
-      expand="md"
-      {...rest}
-    >
-      <Navbar.Brand className="navText" href="#home">
-        {navBrand}
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          {leftLinks.map(link => (
-            <Nav.Link className="navText" href={link.href} key={link.id}>
-              {link.content}
-            </Nav.Link>
-          ))}
-        </Nav>
-        <Nav>
-          {rightLinks.map(link => (
-            <Nav.Link href={link.href} key={link.id}>
-              {link.content}
-            </Nav.Link>
-          ))}
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <nav className="navbar navbar-expand-lg topNav">
+      <Link className="navbar-brand navText" to="/">
+        Quick Ref
+      </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarText">
+        <ul className="navbar-nav mr-auto"></ul>
+        <ul className="navbar-nav">
+          <li className="nav-item active">
+            <Link className="nav-link navText" to="/manageResource/new">
+              Add Resource
+            </Link>
+          </li>
+          <li className="nav-item active">
+            <Link className="nav-link navText" to="/logout">
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 
