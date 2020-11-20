@@ -14,7 +14,7 @@ const myCard = ({ buttonText, cardData, items, ...rest }) => {
         <Card.Title>{cardData.title}</Card.Title>
         <Card.Text>{cardData.description}</Card.Text>
         <div>
-          <p>Tags:</p>
+          <p className="m-1">Tags:</p>
           <TagGroup tags={cardData.tags}></TagGroup>
         </div>
         <div className="link-container">

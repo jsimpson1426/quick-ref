@@ -167,7 +167,7 @@ class ResourceForm extends Component {
     let { data, errors } = this.state;
 
     return (
-      <div>
+      <div className="form-content">
         <h1>Resource Editor</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">

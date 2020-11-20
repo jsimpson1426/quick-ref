@@ -1,6 +1,7 @@
 .card {
   width: 18rem;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   text-align: center h5;
   text-align: left p;
   text-align: left;
@@ -23,3 +24,4 @@
 .dot-menu {
   float: right;
 }
+/*# sourceMappingURL=myCard.css.map */

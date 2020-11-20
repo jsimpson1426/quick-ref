@@ -10,6 +10,7 @@ import { paginate } from "./utils/paginate";
 import "./App.sass";
 import ContentList from "./components/quick-ref/contentList/contentList";
 import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
+import ViewResource from "./components/quick-ref/viewResource/viewResource";
 
 class App extends Component {
   state = {
@@ -86,6 +87,10 @@ class App extends Component {
           <Route
             path="/manageResource/:id"
             render={(props) => <ResourceForm {...props} />}
+          />
+          <Route
+            path="/viewResource/:id"
+            render={(props) => <ViewResource {...props} />}
           />
           <Route
             path="/"

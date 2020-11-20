@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,IAAI;CAGG;;AALrB,AAIE,UAJQ,AAIP,MAAM,CAAC;EACN,OAAO,EAAE,GAAG;CAAG",
+    "sources": [
+        "dotMenu.sass"
+    ],
+    "names": [],
+    "file": "dotMenu.css"
+}
