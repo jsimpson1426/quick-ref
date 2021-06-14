@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "react-bootstrap/Card";
 import "./myCard.sass";
 import DotMenu from "../dotMenu/dotMenu";
 import TagGroup from "../../quick-ref/tagGroup/tagGroup";
+import { ellipsize } from './../../../utils/ellipsize';
 
-const myCard = ({ buttonText, cardData, items, ...rest }) => {
+const myCard = ({ buttonText, cardData, items, className, ...rest }) => {
   return (
-    <Card {...rest}>
-      <Card.Body>
+    <div className={className ? className + " myCard" : className} {...rest}>
+      <div className="header">
         <DotMenu listItems={items} cardID={cardData._id} className="dot-menu" />
-        <Card.Title>{cardData.title}</Card.Title>
-        <Card.Text>{cardData.description}</Card.Text>
+        <h4 className="myCard-title">{ellipsize(cardData.title,20)}</h4>
+      </div>
+      <div className="myCard-body">
+        
+        <div className="myCard-text">{ellipsize(cardData.description,200)}</div>
         <div>
           <p className="m-1">Tags:</p>
           <TagGroup tags={cardData.tags}></TagGroup>
@@ -26,8 +29,8 @@ const myCard = ({ buttonText, cardData, items, ...rest }) => {
             {buttonText}
           </Link>
         </div>
-      </Card.Body>
-    </Card>
+      </div>
+    </div>
   );
 };
 

@@ -14,3 +14,22 @@ a
 a:hover
   color: gray
   text-decoration: none
+
+.circle
+  width: 6px
+  height: 6px
+  margin: 1.8px
+  background: #000000
+  border-radius: 50%
+  display: inline-block
+  -webkit-transition: background .08s, ease .08s
+  -moz-transition: background .08s, ease .08s
+  transition: background .08s, ease .08s
+
+.dots
+  display: inline
+
+  &:hover
+    cursor: pointer
+    > .circle
+      background: #4d4d4d

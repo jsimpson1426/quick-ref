@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./dotMenu.sass";
@@ -15,7 +13,11 @@ const DotMenu = ({ listItems, menuDirection, cardID, ...rest }) => {
         onClick(e);
       }}
     >
-      <FontAwesomeIcon className="menu-dots" icon={faEllipsisH} size="lg" />
+      <div className="dots">
+        <div className="circle"></div>
+        <div className="circle"></div>
+        <div className="circle"></div>
+      </div>
     </a>
   ));
 
