@@ -6,14 +6,8 @@ import "./pagination.sass";
 class Pagination extends Component {
   state = {};
   render() {
-    let {
-      itemCount,
-      pageSize,
-      onPageChange,
-      currentPage,
-      className,
-      ...rest
-    } = this.props;
+    let { itemCount, pageSize, onPageChange, currentPage, className, ...rest } =
+      this.props;
     let numOfPages = _.ceil(itemCount / pageSize);
     if (numOfPages === 1) return null;
     let pageRange = _.range(1, numOfPages + 1);
@@ -27,7 +21,7 @@ class Pagination extends Component {
         {...rest}
       >
         <ul className="pagination">
-          {pageRange.map(number => (
+          {pageRange.map((number) => (
             <li key={number} className="page-item">
               <a
                 key={number}

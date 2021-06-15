@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAGA,AAAA,SAAS,CAAC;EACR,SAAS,EAJE,KAAK;EAKhB,SAAS,EALE,KAAK;EAMhB,WAAW,EALE,IAAI;EAMjB,YAAY,EANC,IAAI;EAOjB,UAAU,EAPG,IAAI;EAQjB,aAAa,EARA,IAAI;CAQc;;AAEjC,AAAA,MAAM,CAAC;EACL,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,SAAS,EAAE,IAAI;CAAG",
-    "sources": [
-        "cardCollection.sass"
-    ],
-    "names": [],
-    "file": "cardCollection.css"
-}

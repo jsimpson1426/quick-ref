@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,gBAAgB,EAAE,OAAO;EACzB,YAAY,EAAE,OAAO;EACrB,KAAK,EAAE,OAAO;CAAG;;AAEnB,AAAA,UAAU,AAAA,MAAM,CAAC;EACf,gBAAgB,EAAE,OAAO;EACzB,YAAY,EAAE,OAAO;EACrB,KAAK,EAAE,OAAO;CAAG;;AAEnB,AAAA,UAAU,AAAA,OAAO,CAAC;EAChB,gBAAgB,EAAE,OAAO;CAAG",
-    "sources": [
-        "pagination.sass"
-    ],
-    "names": [],
-    "file": "pagination.css"
-}
