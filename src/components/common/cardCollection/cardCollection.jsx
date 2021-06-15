@@ -10,9 +10,6 @@ const CardCollection = ({ cardList, className, cardItems, ...rest }) => {
           key={card._id}
           buttonText={"View Material"}
           cardData={card}
-          // title={card.title}
-          // description={card.description}
-          // buttonLink={`/viewResource/${card._id}`}
           className="card-obj"
           items={cardItems}
         />

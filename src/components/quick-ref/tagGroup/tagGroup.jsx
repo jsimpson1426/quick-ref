@@ -1,12 +1,15 @@
 import React from "react";
+import "./tagGroup.sass";
 
 const TagGroup = ({ tags }) => {
   return (
-    <div>
+    <div className="tag-container">
       {tags.map((tag) => (
-        <span className="badge badge-primary m-1" key={tag}>
-          {tag}
-        </span>
+        <div className="tag-content" key={tag}>
+          <b>
+            {tag}
+          </b>
+        </div>
       ))}
     </div>
   );

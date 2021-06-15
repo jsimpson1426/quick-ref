@@ -16,20 +16,19 @@ const myCard = ({ buttonText, cardData, items, className, ...rest }) => {
       <div className="myCard-body">
         
         <div className="myCard-text">{ellipsize(cardData.description,200)}</div>
-        <div>
-          <p className="m-1">Tags:</p>
-          <TagGroup tags={cardData.tags}></TagGroup>
-        </div>
-        <div className="link-container">
+      </div>
+      <div className="myCard-tagBlock">
+        <p>Tags:</p>
+        <TagGroup tags={cardData.tags}></TagGroup>
+      </div>
+      <div className="link-container">
           <Link
             align="left"
             to={`/viewResource/${cardData._id}`}
-            className="btn btn-primary"
           >
             {buttonText}
           </Link>
         </div>
-      </div>
     </div>
   );
 };
