@@ -1,12 +1,17 @@
 .page-link
-  background-color: #95c93d
+  background-color: #111750
   border-color: #6a6a6a
   color: #ffffff
+  transition: background 250ms linear
+  &:hover
+    background-color: #2d3791
+    border-color: #6a6a6a
+    color: #ffffff
+    cursor: pointer
+  &:active
+    background-color: #2d3791
 
-.page-link:hover
-  background-color: #65990d
-  border-color: #6a6a6a
-  color: #ffffff
-
-.page-link:active
-  background-color: #cde99d
+.page-active
+  background-color: #2d3791
+  &:hover
+    background-color: #505cc4

@@ -22,6 +22,11 @@ class App extends Component {
   }
 
   handlePageChange = (page) => {
+    const max = _.ceil(this.state.cards.length / this.state.pageSize);
+
+    if(page <= 1) page = 1;
+    if(page >= max) page = max;
+
     this.setState({ currentPage: page });
   };
 

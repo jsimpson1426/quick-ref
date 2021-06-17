@@ -12,7 +12,7 @@ class Pagination extends Component {
     if (numOfPages === 1) return null;
     let pageRange = _.range(1, numOfPages + 1);
 
-    console.log(currentPage);
+    console.log(pageRange);
 
     return (
       <nav
@@ -21,20 +21,35 @@ class Pagination extends Component {
         {...rest}
       >
         <ul className="pagination">
+          <li className="page-item">
+              <div
+                onClick={() => onPageChange(currentPage - 1)}
+                className="page-link"
+              >
+                &lt;
+              </div>
+            </li>
           {pageRange.map((number) => (
             <li key={number} className="page-item">
-              <a
+              <div
                 key={number}
                 onClick={() => onPageChange(number)}
                 className={
-                  currentPage === number ? "page-link active" : "page-link"
+                  currentPage === number ? "page-link page-active" : "page-link"
                 }
-                href="# "
               >
                 {number}
-              </a>
+              </div>
             </li>
           ))}
+          <li className="page-item">
+              <div
+                onClick={() => onPageChange(currentPage + 1)}
+                className="page-link"
+              >
+                &gt;
+              </div>
+            </li>
         </ul>
       </nav>
     );

@@ -1,5 +1,6 @@
 import React from "react";
 import "./tagGroup.sass";
+import _ from "lodash";
 
 const TagGroup = ({ tags }) => {
   return (
@@ -7,7 +8,7 @@ const TagGroup = ({ tags }) => {
       {tags.map((tag) => (
         <div className="tag-content" key={tag}>
           <b>
-            {tag}
+            {_.capitalize(tag)}
           </b>
         </div>
       ))}
