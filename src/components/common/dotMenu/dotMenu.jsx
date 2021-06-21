@@ -5,8 +5,7 @@ import "./dotMenu.sass";
 
 const DotMenu = ({ listItems, menuDirection, cardID, ...rest }) => {
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <a
-      href
+    <div
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
@@ -18,7 +17,7 @@ const DotMenu = ({ listItems, menuDirection, cardID, ...rest }) => {
         <div className="circle"></div>
         <div className="circle"></div>
       </div>
-    </a>
+    </div>
   ));
 
   return (

@@ -12,11 +12,10 @@ class Pagination extends Component {
     if (numOfPages === 1) return null;
     let pageRange = _.range(1, numOfPages + 1);
 
-    console.log(pageRange);
 
     return (
       <nav
-        className={className ? className + " nums" : className}
+        className={className ? className + " nums page-container" : className + " page-container"}
         aria-label="Page navigation example"
         {...rest}
       >

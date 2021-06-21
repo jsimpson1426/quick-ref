@@ -37,9 +37,11 @@ class App extends Component {
   };
 
   handleDelete = (id) => {
-    let cards = [...this.state.cards];
-    cards = cards.filter((card) => card._id !== id);
-    this.setState({ cards });
+    if(window.confirm("Are you sure you want to delete this resource?")){
+      let cards = [...this.state.cards];
+      cards = cards.filter((card) => card._id !== id);
+      this.setState({ cards });
+    }
   };
 
   renderEdit = (id) => {
@@ -48,9 +50,9 @@ class App extends Component {
 
   renderDelete = (id) => {
     return (
-      <button className="btn btn-primary" onClick={() => this.handleDelete(id)}>
+      <div className="dropdown-delete" onClick={() => this.handleDelete(id)}>
         Delete
-      </button>
+      </div>
     );
   };
 

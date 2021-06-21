@@ -7,5 +7,5 @@ export function paginate(items, pageNumber, pageSize) {
     .slice(start)
     .take(pageSize)
     .value();
-  
+    
 }

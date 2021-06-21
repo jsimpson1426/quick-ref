@@ -22,7 +22,7 @@ class ResourceForm extends Component {
     title: Joi.string().required().label("Title"),
     description: Joi.string().allow("").max(1024).label("Description"),
     file: Joi.string().required().label("File"),
-    tagInput: Joi.string().allow("").optional().max(64).label("Tag"),
+    tagInput: Joi.string().allow("").optional().max(32).label("Tag"),
   };
 
   componentDidMount() {
@@ -161,6 +161,20 @@ class ResourceForm extends Component {
     );
   };
 
+  handleEnterTag = (event) => {
+    console.log('handleEnterTag');
+    if(event.code === 'Enter'){
+        this.tagHandler();
+    }
+  }
+
+  handleEnterSubmit = (event) => {
+    console.log('handleEnterSubmit');
+    if(event.code === 'Enter'){
+        this.handleSubmit();
+    }
+  }
+
   renderFileInput = () => {};
 
   render() {
@@ -168,7 +182,7 @@ class ResourceForm extends Component {
 
     return (
       <div className="form-content">
-        <h1>Resource Editor</h1>
+        <h1><b>Resource Editor</b></h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
@@ -178,6 +192,7 @@ class ResourceForm extends Component {
               className="form-control"
               value={data.title}
               onChange={this.handleChange}
+              onKeyUp={this.handleEnter}
             />
             {errors.title && (
               <div className="alert alert-danger">{errors.title}</div>
@@ -191,26 +206,22 @@ class ResourceForm extends Component {
               className="form-control"
               value={data.description}
               onChange={this.handleChange}
+              onKeyUp={this.handleEnter}
             />
             {errors.description && (
               <div className="alert alert-danger">{errors.description}</div>
             )}
           </div>
           <div className="form-group">
-            <label htmlFor="file">Upload File</label>
+            <label htmlFor="file" className="form-file-label">Upload File</label>
             <br></br>
             <div>
-              <p>
-                Current file:
-                {this.state.data.file
-                  ? " " + this.state.data.file
-                  : " Not Chosen"}
-              </p>
               <input
                 type="file"
                 name="file"
                 className="inputfile"
                 onChange={this.fileChangeHandler}
+                onKeyUp={this.handleEnter}
               />
             </div>
             {errors.file && (
@@ -226,6 +237,7 @@ class ResourceForm extends Component {
                 className="form-control"
                 value={data.tagInput}
                 onChange={this.handleChange}
+                onKeyUp={this.handleEnterTag}
                 aria-describedby="basic-addon2"
               />
               <div className="input-group-append">
@@ -250,7 +262,7 @@ class ResourceForm extends Component {
           <button
             disabled={this.validate()}
             className={
-              !this.validate() ? "btn btn-primary" : "btn btn-secondary"
+              !this.validate() ? "btn btn-primary submit" : "btn btn-secondary submit"
             }
           >
             Upload

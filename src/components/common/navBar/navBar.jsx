@@ -22,12 +22,12 @@ const NavBar = ({ navBrand, leftLinks, rightLinks, className, ...rest }) => {
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto"></ul>
         <ul className="navbar-nav">
-          <li className="nav-item active">
+          <li className="nav-item">
             <Link className="nav-link navText" to="/manageResource/new">
               Add Resource
             </Link>
           </li>
-          <li className="nav-item active">
+          <li className="nav-item">
             <Link className="nav-link navText" to="/logout">
               Logout
             </Link>
