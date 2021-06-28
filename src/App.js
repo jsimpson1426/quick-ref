@@ -15,6 +15,8 @@ class App extends Component {
     pageSize: 6,
     currentPage: 1,
     searchValue: "",
+    sortValue: "",
+    tagFilter: [],
   };
 
   componentDidMount() {
@@ -33,7 +35,53 @@ class App extends Component {
   handleSearchChange = (value) => {
     const str = _.escapeRegExp(value);
     const searchValue = new RegExp(str, "gi");
-    this.setState({ searchValue, currentPage: 1 });
+    this.setState({ searchValue, currentPage: 1});
+  };
+
+  handleSortChange = (value) => {
+    this.setState({ sortValue: value, currentPage: 1 });
+  };
+
+  handleTagAdd = (value) => {
+    if(this.state.tagFilter.length >=5)
+      return window.alert('The limit on Tag Filters are 5. Please remove or clear filters to add more.');
+
+    if(_.includes(this.state.tagFilter, value))
+      return;
+    
+    let tagFilter = [];
+    if(this.state.tagFilter.length === 0)
+      tagFilter = [value];
+    else{
+      tagFilter = [...this.state.tagFilter];
+      tagFilter.push(value);
+    }
+
+    this.setState({ tagFilter, currentPage: 1 });
+  };
+
+  handleTagRemove = (value) => {
+    if(!_.includes(this.state.tagFilter, value))
+      return;
+    
+    let tagFilter = [];
+    if(!(this.state.tagFilter.length <= 1)){
+      tagFilter = [...this.state.tagFilter];
+      let removalPosition = _.indexOf(tagFilter, value);
+      tagFilter.splice(removalPosition , 1);
+    }
+
+    this.setState({ tagFilter, currentPage: 1 });
+  };
+
+  handleClear = () => {
+    this.setState({
+      currentPage: 1,
+      searchValue: "",
+      sortValue: "",
+      tagFilter: [],
+    });
+    
   };
 
   handleDelete = (id) => {
@@ -57,7 +105,7 @@ class App extends Component {
   };
 
   render() {
-    const { cards, pageSize, currentPage } = this.state;
+    const { cards, pageSize, currentPage, sortValue } = this.state;
 
     const filteredCards = cards.filter((item) => {
       return item.title.match(this.state.searchValue);
@@ -75,9 +123,13 @@ class App extends Component {
 
     const pageOfCards = paginate(filteredCards, currentPage, pageSize);
 
-    let cardOptions = [
+    const cardOptions = [
       { key: "Edit", content: this.renderEdit },
       { key: "Delete", content: this.renderDelete },
+    ];
+
+    const filters = [
+      {value: sortValue, label: "Sort", options: ["Ascending","Descending"], onChange: this.handleSortChange}
     ];
 
     return (
@@ -108,6 +160,11 @@ class App extends Component {
                 itemCount={filteredCards.length}
                 pageSize={pageSize}
                 onPageChange={this.handlePageChange}
+                onTagAdd={this.handleTagAdd}
+                onTagDelete={this.handleTagRemove}
+                onClearFilters={this.handleClear}
+                filters={filters}
+                tagFilter={this.state.tagFilter}
                 {...props}
               />
             )}

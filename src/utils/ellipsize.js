@@ -9,5 +9,5 @@ export function ellipsize(someText, maxLength){
     if(maxLength == null){
         return someText;
     }
-    return someText.length <= maxLength ? someText : someText.substring(0,maxLength) + "...";
+    return someText.length <= maxLength ? someText : someText.substring(0,maxLength-3) + "...";
 }

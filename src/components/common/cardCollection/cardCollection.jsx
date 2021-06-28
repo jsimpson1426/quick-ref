@@ -2,7 +2,7 @@ import React from "react";
 import MyCard from "../myCard/myCard";
 import "./cardCollection.sass";
 
-const CardCollection = ({ cardList, className, cardItems, ...rest }) => {
+const CardCollection = ({ cardList, className, cardItems, onTagAdd, ...rest }) => {
   return (
     <div className={className ? className + " cards" : "cards"}>
       {cardList.map((card) => (
@@ -12,6 +12,7 @@ const CardCollection = ({ cardList, className, cardItems, ...rest }) => {
           cardData={card}
           className="card-obj"
           items={cardItems}
+          onTagAdd={onTagAdd}
         />
       ))}
     </div>
