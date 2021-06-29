@@ -6,8 +6,8 @@ import "./tagFilter.sass";
 const TagFilter = ({tags,onTagDelete,onClearFilters}) => {
   if(tags.length <= 0 )
     return ( 
-      <div className="tagFilter-noTags">
-        
+      <div className="tagFilter-container">
+        <b>Click a tag below to filter</b>
       </div>
    );
   
