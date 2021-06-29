@@ -38,6 +38,12 @@ class App extends Component {
     this.setState({ searchValue, currentPage: 1});
   };
 
+  handleSearchChangeReset = (value) => {
+    const str = _.escapeRegExp(value);
+    const searchValue = new RegExp(str, "gi");
+    this.setState({ searchValue, currentPage: 1, sortValue: "", tagFilter: []});
+  };
+
   handleSortChange = (value) => {
     this.setState({ sortValue: value, currentPage: 1 });
   };
@@ -105,11 +111,26 @@ class App extends Component {
   };
 
   render() {
-    const { cards, pageSize, currentPage, sortValue } = this.state;
+    const { cards, pageSize, currentPage, sortValue, tagFilter,searchValue } = this.state;
 
-    const filteredCards = cards.filter((item) => {
-      return item.title.match(this.state.searchValue);
+    let filteredCards = cards.filter((item) => {
+      return item.title.match(searchValue);
     });
+
+    if(tagFilter.length){
+      tagFilter.forEach((tag, index) => {
+        if(filteredCards.length){
+          filteredCards = filteredCards.filter((item) => {
+            return _.includes(item.tags,tag);
+          });
+        }
+      })
+    }
+
+    if(sortValue){
+      filteredCards = _.orderBy(filteredCards,["title"],[sortValue]);
+    }
+    
 
     const leftLinks = [];
 
@@ -129,7 +150,7 @@ class App extends Component {
     ];
 
     const filters = [
-      {value: sortValue, label: "Sort", options: ["Ascending","Descending"], onChange: this.handleSortChange}
+      {value: sortValue, label: "Sort", options: [{value: 'asc',text: 'Ascending'},{value: 'desc',text: 'Descending'}], onChange: this.handleSortChange}
     ];
 
     return (
@@ -152,8 +173,9 @@ class App extends Component {
             path="/"
             render={(props) => (
               <ContentList
-                searchValue={this.state.searchValue}
+                searchValue={searchValue}
                 onChange={this.handleSearchChange}
+                onChangeReset={this.handleSearchChangeReset}
                 cardList={pageOfCards}
                 cardItems={cardOptions}
                 currentPage={currentPage}
@@ -164,7 +186,7 @@ class App extends Component {
                 onTagDelete={this.handleTagRemove}
                 onClearFilters={this.handleClear}
                 filters={filters}
-                tagFilter={this.state.tagFilter}
+                tagFilter={tagFilter}
                 {...props}
               />
             )}

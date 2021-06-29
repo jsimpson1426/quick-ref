@@ -16,7 +16,7 @@ const FilterMenu = ({filterList, className}) => {
           <select name={filterItem.label} value={filterItem.value} id={filterItem.label} onChange={(e) => filterItem.onChange(e.currentTarget.value)}>
             <option value="" defaultValue>--</option>
             {filterItem.options.map((optionItem) => (
-              <option key={optionItem} value={optionItem}>{optionItem}</option>
+              <option key={optionItem.value} value={optionItem.value}>{optionItem.text}</option>
             ))}
           </select>
         

@@ -7,6 +7,7 @@ import FilterSection from "../filterSection/filterSection";
 const ContentList = ({
     searchvalue,
     onChange,
+    onChangeReset,
     cardList,
     cardItems,
     currentPage,
@@ -22,7 +23,7 @@ const ContentList = ({
     if (cardList.length === 0)
       return (
         <div className="body-container">
-          <SearchBar searchvalue={searchvalue} onChange={onChange} />
+          <SearchBar searchvalue={searchvalue} onChange={onChangeReset} />
           <h1>No resources currently available.</h1>
         </div>
       );
