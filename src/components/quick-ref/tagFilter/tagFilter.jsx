@@ -16,13 +16,17 @@ const TagFilter = ({tags,onTagDelete,onClearFilters}) => {
     <div className="tagFilter-container">
       {tags.map((tag) => (
         <div key={tag} className="tagFilter-content">
-          <span onClick={() => onTagDelete(tag)}>x</span>
-          <div>{ellipsize(_.capitalize(tag),12)}</div>
+          <b>
+            <span onClick={() => onTagDelete(tag)}> x </span>
+            <div>{ellipsize(_.capitalize(tag),12)}</div>
+          </b>
         </div>
       ))}
-      <div className="tagFilter-content">
-        <span onClick={onClearFilters}>x</span>
-        <div>Clear</div>
+      <div className="tagFilter-content clear">
+        <b>
+          <span onClick={onClearFilters}> x </span>
+          <div>Clear</div>
+        </b>
       </div>
     </div>
  );

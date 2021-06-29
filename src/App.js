@@ -23,6 +23,7 @@ class App extends Component {
     this.setState({ cards: getResources() });
   }
 
+  //This function controls change of pagination
   handlePageChange = (page) => {
     const max = _.ceil(this.state.cards.length / this.state.pageSize);
 
@@ -32,22 +33,31 @@ class App extends Component {
     this.setState({ currentPage: page });
   };
 
+  //This function controls when a character is added or removed
+  //the page is reset on any search change
+  //the search value will be case insensitive and will be a global match (see RegExp docs for details)
   handleSearchChange = (value) => {
     const str = _.escapeRegExp(value);
     const searchValue = new RegExp(str, "gi");
     this.setState({ searchValue, currentPage: 1});
   };
 
+  //This function is identical to handleSearchChange except for resetting the sortValue and tagFilter
+  //this is used when the search yields no results. If the page is blank, all filters are reset when the search is cleared.
   handleSearchChangeReset = (value) => {
     const str = _.escapeRegExp(value);
     const searchValue = new RegExp(str, "gi");
     this.setState({ searchValue, currentPage: 1, sortValue: "", tagFilter: []});
   };
 
+  //This function simply handles the sortValue and resets the page to 1
   handleSortChange = (value) => {
     this.setState({ sortValue: value, currentPage: 1 });
   };
 
+  //This function appends tags to the tagFilters
+  //with a max of 5
+  //and resets the page to 1
   handleTagAdd = (value) => {
     if(this.state.tagFilter.length >=5)
       return window.alert('The limit on Tag Filters are 5. Please remove or clear filters to add more.');
@@ -66,6 +76,8 @@ class App extends Component {
     this.setState({ tagFilter, currentPage: 1 });
   };
 
+  //This function splices out the target tag in the tagFilters
+  //and resets the page to 1
   handleTagRemove = (value) => {
     if(!_.includes(this.state.tagFilter, value))
       return;
@@ -80,6 +92,7 @@ class App extends Component {
     this.setState({ tagFilter, currentPage: 1 });
   };
 
+  //This function resets all filters and resets the page to 1
   handleClear = () => {
     this.setState({
       currentPage: 1,
@@ -90,6 +103,7 @@ class App extends Component {
     
   };
 
+  //This function deletes a card.
   handleDelete = (id) => {
     if(window.confirm("Are you sure you want to delete this resource?")){
       let cards = [...this.state.cards];
@@ -98,10 +112,12 @@ class App extends Component {
     }
   };
 
+  //This function renders a Link Component to manage a resource by id
   renderEdit = (id) => {
     return <Link to={`/manageResource/${id}`}>Edit</Link>;
   };
 
+  //This function renders a div that handles deletes given a resource id
   renderDelete = (id) => {
     return (
       <div className="dropdown-delete" onClick={() => this.handleDelete(id)}>
@@ -113,10 +129,13 @@ class App extends Component {
   render() {
     const { cards, pageSize, currentPage, sortValue, tagFilter,searchValue } = this.state;
 
+    //filter cards by searchValue
     let filteredCards = cards.filter((item) => {
       return item.title.match(searchValue);
     });
 
+    //if there are tags in the tagFilter array
+    //filter out each card that does not contain all tags in the TagFilter array
     if(tagFilter.length){
       tagFilter.forEach((tag, index) => {
         if(filteredCards.length){
@@ -127,11 +146,13 @@ class App extends Component {
       })
     }
 
+    //if we have a sortValue
+    //sort the titles based on the sort value ('asc' or 'desc')
     if(sortValue){
       filteredCards = _.orderBy(filteredCards,["title"],[sortValue]);
     }
     
-
+    //leftLinks and rightLinks for the navBar
     const leftLinks = [];
 
     const rightLinks = [
@@ -142,13 +163,16 @@ class App extends Component {
       { id: "logout", content: <div className="navText">Logout</div> },
     ];
 
+    //generates the page that we see based on which page we are on and what the max number of cards per page is
     const pageOfCards = paginate(filteredCards, currentPage, pageSize);
 
+    //defining content for dotMenu on each card
     const cardOptions = [
       { key: "Edit", content: this.renderEdit },
       { key: "Delete", content: this.renderDelete },
     ];
 
+    //defining the filters to pass to the props for our filter menu
     const filters = [
       {value: sortValue, label: "Sort", options: [{value: 'asc',text: 'Ascending'},{value: 'desc',text: 'Descending'}], onChange: this.handleSortChange}
     ];

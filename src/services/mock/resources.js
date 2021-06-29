@@ -50,7 +50,7 @@ let cards = [
   {
     title: "This is on Page 2",
     description:
-      "A Quick Reference Guide to basic locator tasks and standards.",
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     file: "example.pdf",
     _id: "5eb5688c5c5f56ea951288b9",
     tags: ["stuff", "phone"]
@@ -58,7 +58,7 @@ let cards = [
   {
     title: "Stuff on Page 2",
     description:
-      "A Quick Reference Guide to basic locator tasks and standards.",
+      "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. ",
     file: "example.pdf",
     _id: "5eb568925f7c648f4a0c388e",
     tags: ["tag", "beanz"]
