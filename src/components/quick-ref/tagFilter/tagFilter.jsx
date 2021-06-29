@@ -25,7 +25,7 @@ const TagFilter = ({tags,onTagDelete,onClearFilters}) => {
       <div className="tagFilter-content clear">
         <b>
           <span onClick={onClearFilters}> x </span>
-          <div>Clear</div>
+          <div>Clear Filters</div>
         </b>
       </div>
     </div>

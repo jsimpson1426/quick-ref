@@ -96,7 +96,6 @@ class App extends Component {
   handleClear = () => {
     this.setState({
       currentPage: 1,
-      searchValue: "",
       sortValue: "",
       tagFilter: [],
     });
