@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import { getResource, saveResource } from "../../../services/mock/resources";
+import { noSpaces } from "../../../utils/customValidators";
 import "./resourceForm.sass";
 
 class ResourceForm extends Component {
@@ -17,12 +18,14 @@ class ResourceForm extends Component {
     fileToUpload: "",
   };
 
+  
+
   schema = {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     description: Joi.string().allow("").max(1024).label("Description"),
     file: Joi.string().required().label("File"),
-    tagInput: Joi.string().allow("").optional().max(32).label("Tag"),
+    tagInput: Joi.string().allow("").optional().max(32).regex(/^(?!\s)[0-9a-zA-Z]+$/, "No Spaces Allowed - Only Alphanumeric Values").label("Tag"),
   };
 
   componentDidMount() {
