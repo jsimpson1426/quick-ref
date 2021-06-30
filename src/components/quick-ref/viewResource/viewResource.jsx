@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { getResource } from "../../../services/mock/resources";
 import { Document, Page} from "react-pdf";
+import "./viewResource.sass";
+import { capitalize } from './../../../utils/capitalize';
 
 class ViewResource extends Component {
   state = {
@@ -42,24 +44,21 @@ class ViewResource extends Component {
   };
 
   render() {
-    const {title, file, tags, handleLoadSuccess, pageNumber} = this.state;
-
-    console.log("https://pim-resources.coleparmer.com/instruction-manual/20001-71.pdf");
+    const {title, description, file, tags, handleLoadSuccess, pageNumber} = this.state;
 
     return (
       <div className="viewResource-container">
-        <h1>{title}</h1>
-        <div>
+        <h1>Title: {title}</h1>
+        <br></br>
+        <h5><b>Description</b>: <br></br>{description}</h5>
+        <br></br>
+        {<div>
+          <h5>Tags:</h5>
+          <br></br>
           {tags.map((tag) => (
-            <div key={tag}>{tag}</div>
+            <p key={tag}><b>{capitalize(tag)}</b></p>
           ))}
-        </div>
-        <Document
-          file={"https://pim-resources.coleparmer.com/instruction-manual/20001-71.pdf"}
-          onLoadSuccess={handleLoadSuccess}
-        >
-          <Page pageNumber={pageNumber}/>
-        </Document>
+        </div>}
 
       </div>
     );
