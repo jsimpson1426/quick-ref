@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import { getResource, saveResource } from "../../../services/mock/resources";
-import { noSpaces } from "../../../utils/customValidators";
 import "./resourceForm.sass";
 
 class ResourceForm extends Component {
