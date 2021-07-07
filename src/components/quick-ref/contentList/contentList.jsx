@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../../common/searchBar/searchbar";
 import CardCollection from "../../common/cardCollection/cardCollection";
-import Pagination from "../../common/pagination/pagination"
+import Pagination from "../../common/pagination/pagination";
 import FilterSection from "../filterSection/filterSection";
 
 const ContentList = ({

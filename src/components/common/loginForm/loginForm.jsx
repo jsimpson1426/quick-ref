@@ -14,7 +14,7 @@ class LoginForm extends Component {
 
   schema = {
     username: Joi.string().min(5).max(32).required().label("Username"),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/,"Must contain one uppercase letter, one lowercase letter, one number and one special character (@$!%*?&)").required().label("Password"),
+    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/).required().label("Password"),
     systemRole: Joi.string().allow("admin","user").required().label("System Role")
   };
 
@@ -58,6 +58,7 @@ class LoginForm extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
+    console.log(input);
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
     if (errorMessage) errors[input.name] = errorMessage;
@@ -106,6 +107,7 @@ class LoginForm extends Component {
             <input
               name="password"
               id="password"
+              type="password"
               className="form-control"
               value={data.password}
               onChange={this.handleChange}
@@ -114,7 +116,10 @@ class LoginForm extends Component {
               <div className="alert alert-danger">{errors.password}</div>
             )}
           </div>
-          <Dropdown className="form-group" data={dropdownData} onChange={this.handleChange}/>
+          <Dropdown className="form-group" data={dropdownData} onChange={this.handleChange} isFormControlled={true}/>
+          {errors.systemRole && (
+              <div className="alert alert-danger">{errors.systemRole}</div>
+            )}
           <button
             disabled={this.validate()}
             className={
