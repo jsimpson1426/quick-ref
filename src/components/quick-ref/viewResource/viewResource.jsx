@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { getResource } from "../../../services/mock/resources";
-import { Document, Page} from "react-pdf";
-import "./viewResource.sass";
 import { capitalize } from './../../../utils/capitalize';
+import { pictureFileTypes, videoFileTypes, determineFileType } from '../../../utils/files';
+import "./viewResource.sass";
 
 class ViewResource extends Component {
   state = {
@@ -11,7 +12,7 @@ class ViewResource extends Component {
     description: "",
     file: "",
     tags: [],
-    fileType: "other",
+    fileType: "",
     pageNumber: 1,
     numPages: null
   };
@@ -31,20 +32,41 @@ class ViewResource extends Component {
     const description = resource.description;
     const file = resource.file;
     const tags = resource.tags ? [...resource.tags] : [];
-    const fileType = this.determineFileType(resource.file);
+    const fileType = determineFileType(resource.file);
     this.setState({ _id, title, description, file, tags,fileType});
-  };
-
-  determineFileType = (fileName) => {
-    return fileName.split(".")[1];
   };
 
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState(numPages);
   };
 
+  renderFile = () => {
+    if(("." + this.state.fileType) === '.pdf'){
+      return(
+        <iframe title="PDF Reader" src={`${document.location.origin}/${this.state.file}`} width="80%" height="400px"></iframe>
+      );
+    } 
+    //if the file is a picture
+    else if (_.includes(pictureFileTypes,"." + this.state.fileType)){
+      return (
+        <img src={`${document.location.origin}/${this.state.file}`} alt={this.state.file} />
+      );
+    }
+    //if the file is a picture
+    else if (_.includes(videoFileTypes,"." + this.state.fileType)){
+      return(
+        <video controls><source src={`${document.location.origin}/${this.state.file}`} type={`video/${this.state.fileType}`} /></video>
+      );
+    }
+    else {
+      return(
+        <a href={`${document.location.origin}/${this.state.file}`}>Download</a>
+      );
+    }
+  }
+
   render() {
-    const {title, description, file, tags, handleLoadSuccess, pageNumber} = this.state;
+    const {title, description,tags} = this.state;
 
     return (
       <div className="viewResource-container">
@@ -52,6 +74,7 @@ class ViewResource extends Component {
         <br></br>
         <h5><b>Description</b>: <br></br>{description}</h5>
         <br></br>
+        {this.renderFile()}
         {<div>
           <h5>Tags:</h5>
           <br></br>

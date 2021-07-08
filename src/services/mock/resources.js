@@ -32,6 +32,14 @@ let cards = [
     tags: ["jpg", "picture", "dog", "example","goodboy"]
   },
   {
+    title: "Now for a Video!",
+    description:
+      "Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. ",
+    file: "mov_bbb.mp4",
+    _id: "5eb568925f7c648f4b78e7d8",
+    tags: ["video", "bunny", "mp4", "example"]
+  },
+  {
     title: "Now an Excel Spreadsheet",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis id consectetur purus ut faucibus.",
