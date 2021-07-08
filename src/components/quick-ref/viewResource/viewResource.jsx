@@ -41,9 +41,10 @@ class ViewResource extends Component {
   };
 
   renderFile = () => {
+    //if the file is a pdf
     if(("." + this.state.fileType) === '.pdf'){
       return(
-        <iframe title="PDF Reader" src={`${document.location.origin}/${this.state.file}`} width="80%" height="400px"></iframe>
+        <iframe title="PDF Reader" src={`${document.location.origin}/${this.state.file}`}></iframe>
       );
     } 
     //if the file is a picture
@@ -52,7 +53,7 @@ class ViewResource extends Component {
         <img src={`${document.location.origin}/${this.state.file}`} alt={this.state.file} />
       );
     }
-    //if the file is a picture
+    //if the file is a video
     else if (_.includes(videoFileTypes,"." + this.state.fileType)){
       return(
         <video controls><source src={`${document.location.origin}/${this.state.file}`} type={`video/${this.state.fileType}`} /></video>
@@ -70,19 +71,11 @@ class ViewResource extends Component {
 
     return (
       <div className="viewResource-container">
-        <h1>Title: {title}</h1>
-        <br></br>
-        <h5><b>Description</b>: <br></br>{description}</h5>
-        <br></br>
+        <h1>{title}</h1>
+        {tags.map((tag) => (<p key={tag}><b>{capitalize(tag)}</b></p>))}
+        <h5><b>Description:</b></h5>
+        <div className="description">{description}</div>
         {this.renderFile()}
-        {<div>
-          <h5>Tags:</h5>
-          <br></br>
-          {tags.map((tag) => (
-            <p key={tag}><b>{capitalize(tag)}</b></p>
-          ))}
-        </div>}
-
       </div>
     );
   }
