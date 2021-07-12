@@ -18,6 +18,7 @@ class App extends Component {
     searchValue: "",
     sortValue: "",
     tagFilter: [],
+    navToggle: false
   };
 
   componentDidMount() {
@@ -126,6 +127,10 @@ class App extends Component {
     );
   };
 
+  handleNavToggle = () => {
+    this.setState({navToggle: !this.state.navToggle});
+  }
+
   render() {
     const { cards, pageSize, currentPage, sortValue, tagFilter,searchValue } = this.state;
 
@@ -151,17 +156,6 @@ class App extends Component {
     if(sortValue){
       filteredCards = _.orderBy(filteredCards,["title"],[sortValue]);
     }
-    
-    //leftLinks and rightLinks for the navBar
-    const leftLinks = [];
-
-    const rightLinks = [
-      {
-        id: "add",
-        content: <div className="navText">Add Resource</div>,
-      },
-      { id: "logout", content: <div className="navText">Logout</div> },
-    ];
 
     //generates the page that we see based on which page we are on and what the max number of cards per page is
     const pageOfCards = paginate(filteredCards, currentPage, pageSize);
@@ -180,9 +174,8 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar
-          navBrand={<div className="navText">Quick-Ref</div>}
-          leftLinks={leftLinks}
-          rightLinks={rightLinks}
+          navToggle={this.state.navToggle}
+          onNavToggle={this.handleNavToggle}
         ></NavBar>
         <Switch>
           <Route

@@ -1,14 +1,59 @@
 .viewResource-container
     margin: auto
     width: 90%
+    & h1
+        font-size: 20pt
+        margin: 20px 0 10px 0
     & p
+        font-size: 8pt
         display: inline
-        margin: 0 20px 0 0
+        margin: 0 10px 0 1px
         border-bottom: 1px solid green
     & img
+        display: block
         max-width: 90%
-        max-height: 300px
-    & iframe
-        max-width: 90%
-        max-height: 300px
+        max-height: 700px
         margin: auto
+    & video
+        display: block
+        width: 90%
+        max-height: 700px
+        margin: auto
+    & iframe
+        width: 100%
+        height: 420px
+    & .description
+        margin: 15px auto 30px auto
+    & .content
+        width: 100%
+        margin: auto
+
+@media (min-width: 768px)
+    .viewResource-container
+        width: 90%
+        & .content
+            width: 90%
+        & iframe
+            height: 700px
+@media (min-width: 1024px)
+    .viewResource-container
+        width: 80%
+        & .content
+            width: 80%
+        & h1
+            font-size: 24pt
+        & p
+            font-size: 10pt
+        & iframe
+            height: 600px
+@media (min-width: 1440px)
+    .viewResource-container
+        width: 75%
+        & .content
+            width: 80%
+        & h1
+            font-size: 28pt
+        & p
+            font-size: 12pt
+        & iframe
+            height: 700px

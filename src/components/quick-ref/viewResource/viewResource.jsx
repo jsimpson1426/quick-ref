@@ -44,8 +44,8 @@ class ViewResource extends Component {
     //if the file is a pdf
     if(("." + this.state.fileType) === '.pdf'){
       return(
-        <iframe title="PDF Reader" src={`${document.location.origin}/${this.state.file}`}></iframe>
-      );
+        <div className="content"><iframe title="PDF Reader" src={`${document.location.origin}/${this.state.file}`}></iframe></div>
+        );
     } 
     //if the file is a picture
     else if (_.includes(pictureFileTypes,"." + this.state.fileType)){
@@ -56,7 +56,7 @@ class ViewResource extends Component {
     //if the file is a video
     else if (_.includes(videoFileTypes,"." + this.state.fileType)){
       return(
-        <video controls><source src={`${document.location.origin}/${this.state.file}`} type={`video/${this.state.fileType}`} /></video>
+        <div className="content"><video controls><source src={`${document.location.origin}/${this.state.file}`} type={`video/${this.state.fileType}`} /></video></div>
       );
     }
     else {
@@ -73,7 +73,6 @@ class ViewResource extends Component {
       <div className="viewResource-container">
         <h1>{title}</h1>
         {tags.map((tag) => (<p key={tag}><b>{capitalize(tag)}</b></p>))}
-        <h5><b>Description:</b></h5>
         <div className="description">{description}</div>
         {this.renderFile()}
       </div>
