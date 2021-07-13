@@ -1,21 +1,21 @@
 import Joi from 'joi-browser';
 import React, { Component } from 'react';
-import Dropdown from '../dropdown/dropdown';
+import {Link} from 'react-router-dom';
+import "./loginForm.sass";
+
 
 class LoginForm extends Component {
   state = {
     data:{
       username: "",
-      password: "",
-      systemRole: ""
+      password: ""
     },
     errors: {}
   }
 
   schema = {
     username: Joi.string().min(5).max(32).required().label("Username"),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/).required().label("Password"),
-    systemRole: Joi.string().allow("admin","user").required().label("System Role")
+    password: Joi.string().required().label("Password")
   };
 
   validate = () => {
@@ -73,20 +73,20 @@ class LoginForm extends Component {
 
   render() {
     
-    const { data, errors } = this.state;
+    const { data } = this.state;
 
-    const dropdownData= {
-      label: "System Role:",
-      name: "systemRole",
-      value: data.systemRole,
-      options: [
-        {text: "Administrator (CRUD ops)", value: 'admin'},
-        {text: "User (View Only)", value: 'user'}
-      ]
-    }
+    // const dropdownData= {
+    //   label: "System Role:",
+    //   name: "systemRole",
+    //   value: data.systemRole,
+    //   options: [
+    //     {text: "Administrator (CRUD ops)", value: 'admin'},
+    //     {text: "User (View Only)", value: 'user'}
+    //   ]
+    // }
 
     return ( 
-      <div className="form-content">
+      <div className="form-content login">
         <h1><b>Login</b></h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
@@ -98,9 +98,6 @@ class LoginForm extends Component {
               value={data.username}
               onChange={this.handleChange}
             />
-            {errors.username && (
-              <div className="alert alert-danger">{errors.username}</div>
-            )}
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -112,14 +109,11 @@ class LoginForm extends Component {
               value={data.password}
               onChange={this.handleChange}
             />
-            {errors.password && (
-              <div className="alert alert-danger">{errors.password}</div>
-            )}
           </div>
-          <Dropdown className="form-group" data={dropdownData} onChange={this.handleChange} isFormControlled={true}/>
+          {/* <Dropdown className="form-group" data={dropdownData} onChange={this.handleChange} isFormControlled={true}/>
           {errors.systemRole && (
               <div className="alert alert-danger">{errors.systemRole}</div>
-            )}
+            )} */}
           <button
             disabled={this.validate()}
             className={
@@ -128,6 +122,7 @@ class LoginForm extends Component {
           >
             Login
           </button>
+          <p>Do you need an account? Click here to <Link to="/register">Register</Link>.</p>
         </form>
       </div>
      );

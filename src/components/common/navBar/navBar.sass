@@ -14,12 +14,13 @@
     right: 20px
     top: 10px
     z-index: 4
+    transition: background-color .1s linear
     &:hover
-      background-color: #b8b8b8
+      background-color: #cecece
       cursor: pointer
     &:active
       cursor: pointer
-      background-color: #b8b8b8
+      background-color: #cecece
       box-shadow: 0px 0px 0px 2px blue
     & .hamburger
       position: relative
@@ -31,8 +32,12 @@
         margin: 3px 0 3px 0
         background-color: black
   & .leftLink
+    font-size: 16pt
     float: left
-    margin: 15px 12px 0 12px
+    margin: 12px 0 0 20px
+    transition: color .1s linear
+    &:hover
+      color: #cecece
   & .rightLinks-menu
     position: absolute
     left: 0
@@ -63,20 +68,46 @@
         margin: auto
         padding: 10px 0 10px 0
         display: block
+        border-bottom: 1px solid black
+        transition: background-color .1s linear
         &:hover
           background-color: #b6937a
         & a
           display: block
-          color: White
+          color: #EEEEEE
           width: 100%
           height: 100%
 
 @media ( min-width: 768px )
-  .rightLinks
-    height: 100%
-    float: right
-    & ul
-      margin-top: 15px
-      & li
-        margin: 0 12px 0 12px
+  .topNav
+    & .navToggle
+      display: none
+    & .rightLinks-menu
+      display: none
+      &-closed
+        display: none
+    & .rightLinks
+      display: inline
+      float: right
+      &-closed
         display: inline
+        height: 100%
+        float: right
+        & ul
+          margin-top: 18px
+          float: right
+        & li
+          margin: 0 12px 0 12px
+          display: inline
+          width: auto
+          & a
+            display: inline
+      & ul
+        margin-top: 8px
+        float: right
+        background-color: transparent
+        & li
+          margin: 0 12px 0 12px
+          border-bottom: 0
+          display: inline-block
+          width: auto

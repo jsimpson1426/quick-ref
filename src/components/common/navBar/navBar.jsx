@@ -2,7 +2,7 @@ import React from "react";
 import "./navBar.sass";
 import { Link } from "react-router-dom";
 
-const NavBar = ({ navToggle, onNavToggle, ...rest }) => {
+const NavBar = ({ navToggle, onNavToggle, onRouteChange, onLogout, ...rest }) => {
   // return (
   //   <nav className="navbar navbar-expand-lg topNav">
   //     <Link className="navbar-brand navText" to="/">
@@ -32,8 +32,8 @@ const NavBar = ({ navToggle, onNavToggle, ...rest }) => {
   //   </nav>
   // );
   return (
-    <nav className={navToggle ? "topNav open" : "topNav"}>
-      <Link className="leftLink" to="/">
+    <nav className="topNav">
+      <Link className="leftLink" onClick={onRouteChange} to="/">
         Quick Ref
       </Link>
       <div className="navToggle" onClick={onNavToggle}>
@@ -47,12 +47,17 @@ const NavBar = ({ navToggle, onNavToggle, ...rest }) => {
       <div className={navToggle ? "rightLinks" : "rightLinks-closed"} id="navbarText">
         <ul className="navList">
           <li >
-            <Link  to="/manageResource/new">
+            <Link to="/" onClick={onRouteChange}>
+              Home
+            </Link>
+          </li>
+          <li >
+            <Link to="/manageResource/new" onClick={onRouteChange}>
               Add Resource
             </Link>
           </li>
           <li >
-            <Link  to="/logout">
+            <Link  to="/login" onClick={onLogout}>
               Logout
             </Link>
           </li>

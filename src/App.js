@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { Switch, Route, Link } from "react-router-dom";
-import NavBar from "./components/common/navBar/navBar";
 import { getResources } from "./services/mock/resources";
 import { paginate } from "./utils/paginate";
-import "./App.sass";
+import NavBar from "./components/common/navBar/navBar";
 import ContentList from "./components/quick-ref/contentList/contentList";
 import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
 import ViewResource from "./components/quick-ref/viewResource/viewResource";
 import LoginForm from "./components/common/loginForm/loginForm";
+import RegisterForm from "./components/common/registerForm/registerForm";
+import "./App.sass";
 
 class App extends Component {
   state = {
@@ -25,6 +26,10 @@ class App extends Component {
     this.setState({ cards: getResources() });
   }
 
+  handleRoute = () => {
+    this.setState({navToggle: false});
+  }
+
   //This function controls change of pagination
   handlePageChange = (page) => {
     const max = _.ceil(this.state.cards.length / this.state.pageSize);
@@ -34,6 +39,10 @@ class App extends Component {
 
     this.setState({ currentPage: page });
   };
+
+  handleLogout = () => {
+    this.setState({navToggle: false});
+  }
 
   //This function controls when a character is added or removed
   //the page is reset on any search change
@@ -176,6 +185,8 @@ class App extends Component {
         <NavBar
           navToggle={this.state.navToggle}
           onNavToggle={this.handleNavToggle}
+          onRouteChange={this.handleRoute}
+          onLogout={this.handleLogout}
         ></NavBar>
         <Switch>
           <Route
@@ -189,6 +200,10 @@ class App extends Component {
           <Route
             path="/login"
             render={(props) => <LoginForm {...props} />}
+          />
+          <Route
+            path="/register"
+            render={(props) => <RegisterForm {...props} />}
           />
           <Route
             path="/"
