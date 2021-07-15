@@ -1,24 +1,42 @@
 import React, { Component } from 'react';
-import Joi from 'joi-browser';
+import Joi from 'joi';
 import './registerForm.sass';
 
 class RegisterForm extends Component {
   state = {
     data:{
       email: "",
-      password: ""
+      password: "",
+      passwordCheck: ""
     },
     errors: {}
   }
 
+  checkPassword = (value, helpers) => {
+    if (value !== this.state.data.password)
+      return helpers.message('Passwords do not match.');
+
+    return value;
+  }
+
   schema = {
-    email: Joi.string().email().required().label("Email"),
-    password: Joi.string().required().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/).label("Password")
+    email: Joi.string()
+    .email({ tlds: {allow: false} })
+    .required()
+    .label("Email"),
+    password: Joi.string()
+    .required()
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/)
+    .label("Password"),
+    passwordCheck: Joi.custom(this.checkPassword,"Check Password").label('Password Check')
+    //.error(new Error('Passwords do not match.')).ref('password')
   };
+
+  joiSchema = Joi.object(this.schema);
 
   validate = () => {
     const options = { abortEarly: false };
-    const { error } = Joi.validate(this.state.data, this.schema, options);
+    const { error } = this.joiSchema.validate(this.state.data, options);
     if (!error) return null;
 
     const errors = {};
@@ -28,8 +46,9 @@ class RegisterForm extends Component {
 
   validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
+    console.log(this.schema);
+    const schema = Joi.object({ [name]: this.schema[name] });
+    const { error } = schema.validate(obj);
     return error ? error.details[0].message : null;
   };
 
@@ -57,7 +76,6 @@ class RegisterForm extends Component {
 
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
-    console.log(errors);
     const errorMessage = this.validateProperty(input);
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
@@ -100,7 +118,21 @@ class RegisterForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <div className="alert alert-secondary">Password must contain:
+        <div className="form-group">
+          <label htmlFor="passwordCheck">Re-type Password</label>
+          <input
+            name="passwordCheck"
+            id="passwordCheck"
+            type="password"
+            className="form-control"
+            value={data.passwordCheck}
+            onChange={this.handleChange}
+          />
+        </div>
+        {errors.passwordCheck && (
+              <div className="alert alert-danger">{errors.passwordCheck}</div>
+            )}
+        <div className="alert alert-secondary">Password must at least 8 characters long and contain:
         <ul>
           <li>1 Lowercase Letter</li>
           <li>1 Uppercase Letter</li>
