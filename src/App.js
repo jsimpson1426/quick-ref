@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { Switch, Route, Link } from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 import { getResources } from "./services/mock/resources";
 import { paginate } from "./utils/paginate";
 import NavBar from "./components/common/navBar/navBar";
@@ -9,6 +10,8 @@ import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
 import ViewResource from "./components/quick-ref/viewResource/viewResource";
 import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
+
+import "react-toastify/dist/ReactTostify.css";
 import "./App.sass";
 
 class App extends Component {
@@ -182,6 +185,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <ToastContainer />
         <NavBar
           navToggle={this.state.navToggle}
           onNavToggle={this.handleNavToggle}
