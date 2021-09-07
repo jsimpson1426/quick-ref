@@ -75,7 +75,8 @@ class ResourceForm extends Component {
     this.doSubmit();
   };
 
-  doSubmit = () => {
+  doSubmit = async () => {
+
     let dataToSend = {};
     dataToSend._id = this.state.data._id;
     dataToSend.title = this.state.data.title;
@@ -84,7 +85,7 @@ class ResourceForm extends Component {
     dataToSend.tags = this.state.tags;
     dataToSend.fileToUpload = this.state.fileToUpload;
 
-    saveResource(dataToSend);
+    await saveResource(dataToSend);
 
     this.props.history.push("/");
   };
