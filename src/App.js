@@ -11,7 +11,7 @@ import ViewResource from "./components/quick-ref/viewResource/viewResource";
 import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
 
-import "react-toastify/dist/ReactTostify.css";
+import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./App.sass";
 
 class App extends Component {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import { getResource, saveResource } from "../../../services/mock/resources";
 import "./resourceForm.sass";
+import { editResource } from "../../../services/api/resources";
 
 class ResourceForm extends Component {
   state = {
@@ -32,7 +33,7 @@ class ResourceForm extends Component {
     if (resourceId === "new") return;
 
     const resource = getResource(resourceId);
-    if (!resource) return this.props.history.replace("/");
+    if (!resource) return this.props.history.replace("/manageResource/new");
 
     this.initializeView(resource);
   }
@@ -85,7 +86,14 @@ class ResourceForm extends Component {
     dataToSend.tags = this.state.tags;
     dataToSend.fileToUpload = this.state.fileToUpload;
 
-    await saveResource(dataToSend);
+    if(this.props.match.params.id === "new"){
+      await saveResource(dataToSend);
+    } else if(this.props.match.params.id === this.state._id) {
+      await editResource(dataToSend);
+    } else{
+      alert("An unknown error occurred.");
+      this.props.history.push('/');
+    }
 
     this.props.history.push("/");
   };
