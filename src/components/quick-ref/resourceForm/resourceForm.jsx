@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import FormData from "form-data";
 import { getResource, saveResource } from "../../../services/mock/resources";
 import "./resourceForm.sass";
+import { editResource } from "../../../services/api/resources";
 
 
 class ResourceForm extends Component {
@@ -34,7 +35,7 @@ class ResourceForm extends Component {
     if (resourceId === "new") return;
 
     const resource = getResource(resourceId);
-    if (!resource) return this.props.history.replace("/");
+    if (!resource) return this.props.history.replace("/manageResource/new");
 
     this.initializeView(resource);
   }
@@ -76,6 +77,7 @@ class ResourceForm extends Component {
     this.doSubmit();
   };
 
+<<<<<<< HEAD
   doSubmit = () => {
     let form = new FormData();
 
@@ -85,6 +87,26 @@ class ResourceForm extends Component {
     form.append('file', this.state.fileToUpload);
 
     saveResource(form);
+=======
+  doSubmit = async () => {
+
+    let dataToSend = {};
+    dataToSend._id = this.state.data._id;
+    dataToSend.title = this.state.data.title;
+    dataToSend.description = this.state.data.description;
+    dataToSend.file = this.state.data.file;
+    dataToSend.tags = this.state.tags;
+    dataToSend.fileToUpload = this.state.fileToUpload;
+
+    if(this.props.match.params.id === "new"){
+      await saveResource(dataToSend);
+    } else if(this.props.match.params.id === this.state._id) {
+      await editResource(dataToSend);
+    } else{
+      alert("An unknown error occurred.");
+      this.props.history.push('/');
+    }
+>>>>>>> 99519167e10cb1fde94305e086e41bf589a68b9c
 
     this.props.history.push('/');
   };
