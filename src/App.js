@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { Switch, Route, Link } from "react-router-dom";
 import {ToastContainer} from "react-toastify";
-import { getResources } from "./services/mock/resources";
+import { getResources } from "./services/api/resources";
 import { paginate } from "./utils/paginate";
 import NavBar from "./components/common/navBar/navBar";
 import ContentList from "./components/quick-ref/contentList/contentList";
@@ -25,8 +25,9 @@ class App extends Component {
     navToggle: false
   };
 
-  componentDidMount() {
-    this.setState({ cards: getResources() });
+  async componentDidMount() {
+    const resources = await getResources();
+    this.setState({ cards: resources });
   }
 
   handleRoute = () => {

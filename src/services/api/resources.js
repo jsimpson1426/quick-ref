@@ -3,14 +3,14 @@ import FormData from "form-data";
 import config from "./config.json";
 
 export async function getResources() {
-  return await http.get(config.apiEndpoint + "/resources");
+  return await http.get(config.apiEndpoint + "/resources", );
 }
 
 export async function getResource(id) {
   return await http.get(config.apiEndpoint + "/resources/" + id);
 }
 
-export async function saveNewResource(data) {
+export async function saveResource(data) {
 
   const {title, description, tags, fileToUpload} = data;
   

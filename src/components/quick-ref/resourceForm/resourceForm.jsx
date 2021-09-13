@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-import FormData from "form-data";
-import { getResource, saveResource } from "../../../services/mock/resources";
 import "./resourceForm.sass";
-import { editResource } from "../../../services/api/resources";
+import { getResource, saveResource, editResource } from "../../../services/api/resources";
 
 
 class ResourceForm extends Component {
@@ -30,11 +28,11 @@ class ResourceForm extends Component {
     tagInput: Joi.string().allow("").optional().max(32).regex(/^(?!\s)[0-9a-zA-Z]+$/, "No Spaces Allowed - Only Alphanumeric Values").label("Tag"),
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const resourceId = this.props.match.params.id;
     if (resourceId === "new") return;
 
-    const resource = getResource(resourceId);
+    const resource = await getResource(resourceId);
     if (!resource) return this.props.history.replace("/manageResource/new");
 
     this.initializeView(resource);
@@ -77,17 +75,6 @@ class ResourceForm extends Component {
     this.doSubmit();
   };
 
-<<<<<<< HEAD
-  doSubmit = () => {
-    let form = new FormData();
-
-    form.append('title', this.state.data.title);
-    form.append('description', this.state.data.description);
-    form.append('tags', JSON.stringify(this.state.tags));
-    form.append('file', this.state.fileToUpload);
-
-    saveResource(form);
-=======
   doSubmit = async () => {
 
     let dataToSend = {};
@@ -106,7 +93,6 @@ class ResourceForm extends Component {
       alert("An unknown error occurred.");
       this.props.history.push('/');
     }
->>>>>>> 99519167e10cb1fde94305e086e41bf589a68b9c
 
     this.props.history.push('/');
   };
