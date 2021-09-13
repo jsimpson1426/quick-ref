@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
+import FormData from "form-data";
 import { getResource, saveResource } from "../../../services/mock/resources";
 import "./resourceForm.sass";
+
 
 class ResourceForm extends Component {
   state = {
@@ -14,7 +16,7 @@ class ResourceForm extends Component {
     errors: {},
     tags: [],
     tagsErrors: "",
-    fileToUpload: "",
+    fileToUpload: ""
   };
 
   
@@ -23,7 +25,7 @@ class ResourceForm extends Component {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     description: Joi.string().allow("").max(1024).label("Description"),
-    file: Joi.string().required().label("File"),
+    file: Joi.string().required(),
     tagInput: Joi.string().allow("").optional().max(32).regex(/^(?!\s)[0-9a-zA-Z]+$/, "No Spaces Allowed - Only Alphanumeric Values").label("Tag"),
   };
 
@@ -44,8 +46,7 @@ class ResourceForm extends Component {
     data.description = resource.description;
     data.file = resource.file;
     const tags = resource.tags ? [...resource.tags] : [];
-    const fileToUpload = resource.fileToUpload;
-    this.setState({ data, tags, fileToUpload });
+    this.setState({ data, tags });
   };
 
   validate = () => {
@@ -76,17 +77,16 @@ class ResourceForm extends Component {
   };
 
   doSubmit = () => {
-    let dataToSend = {};
-    dataToSend._id = this.state.data._id;
-    dataToSend.title = this.state.data.title;
-    dataToSend.description = this.state.data.description;
-    dataToSend.file = this.state.data.file;
-    dataToSend.tags = this.state.tags;
-    dataToSend.fileToUpload = this.state.fileToUpload;
+    let form = new FormData();
 
-    saveResource(dataToSend);
+    form.append('title', this.state.data.title);
+    form.append('description', this.state.data.description);
+    form.append('tags', JSON.stringify(this.state.tags));
+    form.append('file', this.state.fileToUpload);
 
-    this.props.history.push("/");
+    saveResource(form);
+
+    this.props.history.push('/');
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -110,13 +110,13 @@ class ResourceForm extends Component {
     else delete errors[event.currentTarget.name];
 
     const data = { ...this.state.data };
-    data["file"] = event.target.files[0] ? event.target.files[0].name : "";
+    data["file"] = event.target.files[0].name;
 
     this.setState({
       data,
       errors,
       tagsErrors,
-      fileToUpload: event.target.files[0],
+      fileToUpload: event.target.files[0]
     });
   };
 
@@ -164,14 +164,12 @@ class ResourceForm extends Component {
   };
 
   handleEnterTag = (event) => {
-    console.log('handleEnterTag');
     if(event.code === 'Enter'){
         this.tagHandler();
     }
   }
 
   handleEnterSubmit = (event) => {
-    console.log('handleEnterSubmit');
     if(event.code === 'Enter'){
         this.handleSubmit();
     }
@@ -217,15 +215,13 @@ class ResourceForm extends Component {
           <div className="form-group">
             <label htmlFor="file" className="form-file-label">Upload File</label>
             <br></br>
-            <div>
-              <input
-                type="file"
-                name="file"
-                className="inputfile"
-                onChange={this.fileChangeHandler}
-                onKeyUp={this.handleEnter}
-              />
-            </div>
+            <input
+              type="file"
+              name="file"
+              className="inputfile"
+              onChange={this.fileChangeHandler}
+              onKeyUp={this.handleEnter}
+            />
             {errors.file && (
               <div className="alert alert-danger">{errors.file}</div>
             )}
