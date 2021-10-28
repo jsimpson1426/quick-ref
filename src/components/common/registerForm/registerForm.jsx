@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Joi from 'joi';
+
+import { registerUser } from '../../../services/api/register';
 import './registerForm.sass';
+import auth from '../../../services/api/auth';
 
 class RegisterForm extends Component {
   state = {
@@ -62,16 +65,19 @@ class RegisterForm extends Component {
     this.doSubmit();
   };
 
-  doSubmit = () => {
-    let dataToSend = {};
-    dataToSend._id = this.state.data._id;
-    dataToSend.title = this.state.data.title;
-    dataToSend.description = this.state.data.description;
-    dataToSend.file = this.state.data.file;
-    dataToSend.tags = this.state.tags;
-    dataToSend.fileToUpload = this.state.fileToUpload;
-
-    this.props.history.push("/");
+  doSubmit = async () => {
+    try{
+      const {email, password} = this.state.data;
+      const response = await registerUser({email, password});
+      auth.loginWithJWT(response.headers['x-auth-token']);
+      window.location("/");
+    } catch (error){
+      if(error.response && error.response.status === 400){
+        const errors = { ...this.state.errors };
+        errors.username = error.response.data;
+        this.setState({errors});
+      }
+    }
   };
 
   handleChange = ({ currentTarget: input }) => {

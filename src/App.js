@@ -13,6 +13,7 @@ import RegisterForm from "./components/common/registerForm/registerForm";
 
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./App.sass";
+import { getCurrentUser } from "./services/api/auth";
 
 class App extends Component {
   state = {
@@ -22,12 +23,15 @@ class App extends Component {
     searchValue: "",
     sortValue: "",
     tagFilter: [],
-    navToggle: false
+    navToggle: false,
+    user: null
   };
 
   async componentDidMount() {
     const resources = await getResources();
-    this.setState({ cards: resources });
+    const cards = resources.data;
+    const user = await getCurrentUser();
+    this.setState({ cards, user });
   }
 
   handleRoute = () => {

@@ -1,20 +1,21 @@
 import Joi from 'joi-browser';
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
+import auth from '../../../services/api/auth';
 import "./loginForm.sass";
 
 
 class LoginForm extends Component {
   state = {
     data:{
-      username: "",
+      email: "",
       password: ""
     },
     errors: {}
   }
 
   schema = {
-    username: Joi.string().min(5).max(32).required().label("Username"),
+    email: Joi.string().min(5).max(32).required().label("Email"),
     password: Joi.string().required().label("Password")
   };
 
@@ -45,20 +46,23 @@ class LoginForm extends Component {
     this.doSubmit();
   };
 
-  doSubmit = () => {
-    let dataToSend = {};
-    dataToSend._id = this.state.data._id;
-    dataToSend.title = this.state.data.title;
-    dataToSend.description = this.state.data.description;
-    dataToSend.file = this.state.data.file;
-    dataToSend.tags = this.state.tags;
-    dataToSend.fileToUpload = this.state.fileToUpload;
-
-    this.props.history.push("/");
+  doSubmit = async () => {
+    try {
+      const {email, password} = this.state.data;
+      await auth.login({email,password});
+      const {state} = this.props.location;
+      window.location = state ? state.from.pathname : "/";
+    } catch (error) {
+      if (error.response && error.response.status === 400){
+        const errors = {...this.state.errors};
+        errors.email = error.response.data;
+        this.setState({errors});
+      }
+    }
+    
   };
 
   handleChange = ({ currentTarget: input }) => {
-    console.log(input);
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
     if (errorMessage) errors[input.name] = errorMessage;
@@ -73,29 +77,23 @@ class LoginForm extends Component {
 
   render() {
     
-    const { data } = this.state;
+    if(auth.getCurrentUser()){
+      return <Redirect to="/" />
+    }
 
-    // const dropdownData= {
-    //   label: "System Role:",
-    //   name: "systemRole",
-    //   value: data.systemRole,
-    //   options: [
-    //     {text: "Administrator (CRUD ops)", value: 'admin'},
-    //     {text: "User (View Only)", value: 'user'}
-    //   ]
-    // }
+    const { data } = this.state;
 
     return ( 
       <div className="form-content login">
         <h1><b>Login</b></h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              name="username"
-              id="username"
+              name="email"
+              id="email"
               className="form-control"
-              value={data.username}
+              value={data.email}
               onChange={this.handleChange}
             />
           </div>
@@ -110,10 +108,6 @@ class LoginForm extends Component {
               onChange={this.handleChange}
             />
           </div>
-          {/* <Dropdown className="form-group" data={dropdownData} onChange={this.handleChange} isFormControlled={true}/>
-          {errors.systemRole && (
-              <div className="alert alert-danger">{errors.systemRole}</div>
-            )} */}
           <button
             disabled={this.validate()}
             className={
