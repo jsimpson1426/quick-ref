@@ -5,8 +5,8 @@ export const videoFileTypes = [".mp4"];
 
 //returns the file type given a filename
 //e.g. filename.js returns 'js'
-export function determineFileType(fileName){
-  return fileName.split(".")[1];
+export function determineFileType(name){
+  return name.split(".")[1];
 };
 
 export default {

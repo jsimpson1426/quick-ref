@@ -49,7 +49,7 @@ class LoginForm extends Component {
   doSubmit = async () => {
     try {
       const {email, password} = this.state.data;
-      await auth.login({email,password});
+      await auth.login(email,password);
       const {state} = this.props.location;
       window.location = state ? state.from.pathname : "/";
     } catch (error) {
