@@ -30,14 +30,13 @@ export async function saveResource(data) {
   return await http.post(config.apiEndpoint + "/resources", form, {headers: headers});
 }
 
-export async function editResource(data) {
-  const {_id, title, description, tags, fileToUpload} = data;
+export async function editResource(_id, data) {
+  const {title, description, tags, fileToUpload} = data;
   
   let form = new FormData();
 
   const headers = { "Content-Type": "multipart/form-data" }
-
-  form.append("_id", _id);
+  
   form.append("title", title);
   form.append("description", description);
 

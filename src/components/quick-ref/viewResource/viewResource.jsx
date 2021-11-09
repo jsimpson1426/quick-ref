@@ -3,7 +3,10 @@ import _ from "lodash";
 import { getResource } from "../../../services/api/resources";
 import { capitalize } from './../../../utils/capitalize';
 import { pictureFileTypes, videoFileTypes, determineFileType } from '../../../utils/files';
+import { apiEndpoint } from '../../../services/api/config.json';
 import "./viewResource.sass";
+
+const endPoint = apiEndpoint + "/uploads";
 
 class ViewResource extends Component {
   state = {
@@ -37,24 +40,24 @@ class ViewResource extends Component {
     //if the filename is a pdf
     if(("." + this.state.fileType) === '.pdf'){
       return(
-        <div className="content"><iframe title="PDF Reader" src={`${document.location.origin}/${this.state.filename}`}></iframe></div>
+        <div className="content"><iframe title="PDF Reader" src={`${endPoint}/${this.state.filename}`}></iframe></div>
         );
     } 
     //if the filename is a picture
     else if (_.includes(pictureFileTypes,"." + this.state.fileType)){
       return (
-        <img src={`${document.location.origin}/${this.state.filename}`} alt={this.state.filename} />
+        <img src={`${endPoint}/${this.state.filename}`} alt={this.state.filename} />
       );
     }
     //if the filename is a video
     else if (_.includes(videoFileTypes,"." + this.state.fileType)){
       return(
-        <div className="content"><video controls><source src={`${document.location.origin}/${this.state.filename}`} type={`video/${this.state.fileType}`} /></video></div>
+        <div className="content"><video controls><source src={`${endPoint}/${this.state.filename}`} type={`video/${this.state.fileType}`} /></video></div>
       );
     }
     else {
       return(
-        <a href={`${document.location.origin}/${this.state.filename}`}>Download</a>
+        <a href={`${endPoint}/${this.state.filename}`}>Download</a>
       );
     }
   }

@@ -7,6 +7,7 @@ import { getResource, saveResource, editResource } from "../../../services/api/r
 class ResourceForm extends Component {
   state = {
     data: {
+      _id: "",
       title: "",
       description: "",
       file: "",
@@ -21,7 +22,6 @@ class ResourceForm extends Component {
   
 
   schema = {
-    _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     description: Joi.string().allow("").max(1024).label("Description"),
     file: Joi.string().required(),
