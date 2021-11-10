@@ -48,3 +48,7 @@ export async function editResource(_id, data) {
 
   return await http.put(config.apiEndpoint + "/" + _id, form, {headers: headers});
 }
+
+export async function deleteResource(id) {
+  return await http.delete(config.apiEndpoint + "/resources/" + id);
+}

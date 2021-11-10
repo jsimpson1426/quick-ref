@@ -6,8 +6,8 @@ import { getResource, saveResource, editResource } from "../../../services/api/r
 
 class ResourceForm extends Component {
   state = {
+    _id: "",
     data: {
-      _id: "",
       title: "",
       description: "",
       file: "",
@@ -18,8 +18,6 @@ class ResourceForm extends Component {
     tagsErrors: "",
     fileToUpload: ""
   };
-
-  
 
   schema = {
     title: Joi.string().required().label("Title"),
@@ -32,20 +30,21 @@ class ResourceForm extends Component {
     const resourceId = this.props.match.params.id;
     if (resourceId === "new") return;
 
-    const resource = await getResource(resourceId);
+    const response = await getResource(resourceId);
+    const resource = response.data;
     if (!resource) return this.props.history.replace("/manageResource/new");
 
     this.initializeView(resource);
   }
 
   initializeView = (resource) => {
-    let data = { ...this.state.data };
-    data._id = resource._id;
+    let { data, _id } = { ...this.state };
+    _id = resource._id;
     data.title = resource.title;
     data.description = resource.description;
     data.file = resource.file;
     const tags = resource.tags ? [...resource.tags] : [];
-    this.setState({ data, tags });
+    this.setState({_id, data, tags });
   };
 
   validate = () => {
@@ -78,7 +77,6 @@ class ResourceForm extends Component {
   doSubmit = async () => {
 
     let dataToSend = {};
-    dataToSend._id = this.state.data._id;
     dataToSend.title = this.state.data.title;
     dataToSend.description = this.state.data.description;
     dataToSend.file = this.state.data.file;
@@ -88,7 +86,7 @@ class ResourceForm extends Component {
     if(this.props.match.params.id === "new"){
       await saveResource(dataToSend);
     } else if(this.props.match.params.id === this.state._id) {
-      await editResource(dataToSend);
+      await editResource(this.state._id, dataToSend);
     } else{
       alert("An unknown error occurred.");
       this.props.history.push('/');

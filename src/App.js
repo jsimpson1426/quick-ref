@@ -7,6 +7,7 @@ import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
 import ViewResource from "./components/quick-ref/viewResource/viewResource";
 import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
+import Logout from "./components/quick-ref/logout/logout";
 
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 import "./App.sass";
@@ -26,10 +27,6 @@ class App extends Component {
     this.setState({navToggle: false});
   }
 
-  handleLogout = () => {
-    this.setState({navToggle: false});
-  }
-
   render() {
 
     return (
@@ -39,7 +36,6 @@ class App extends Component {
           navToggle={this.state.navToggle}
           onNavToggle={this.handleNavToggle}
           onRouteChange={this.handleRoute}
-          onLogout={this.handleLogout}
         ></NavBar>
         <Switch>
           <Route
@@ -53,6 +49,10 @@ class App extends Component {
           <Route
             path="/login"
             render={(props) => <LoginForm {...props} />}
+          />
+          <Route
+            path="/logout"
+            render={(props) => <Logout {...props} />}
           />
           <Route
             path="/register"

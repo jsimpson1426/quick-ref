@@ -6,7 +6,7 @@ import CardCollection from "../../common/cardCollection/cardCollection";
 import Pagination from "../../common/pagination/pagination";
 import FilterSection from "../filterSection/filterSection";
 import {paginate} from "../../../utils/paginate";
-import { getResources } from "../../../services/api/resources";
+import { getResources, deleteResource } from "../../../services/api/resources";
 
 class ContentList extends Component{
 
@@ -106,11 +106,17 @@ class ContentList extends Component{
   };
 
   //This function deletes a card.
-  handleDelete = (id) => {
+  handleDelete = async (id) => {
     if(window.confirm("Are you sure you want to delete this resource?")){
-      let cards = [...this.state.cards];
-      cards = cards.filter((card) => card._id !== id);
-      this.setState({ cards });
+      try{
+        let cards = [...this.state.cards];
+        cards = cards.filter((card) => card._id !== id);
+        this.setState({ cards });
+        await deleteResource(id);
+      }catch(err){
+        console.log(err);
+      }
+      
     }
   };
 
