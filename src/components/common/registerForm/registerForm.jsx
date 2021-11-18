@@ -69,8 +69,10 @@ class RegisterForm extends Component {
     try{
       const {email, password} = this.state.data;
       const response = await registerUser({email, password});
+      console.log(response);
+      console.log(response.headers['x-auth-token']);
       auth.loginWithJWT(response.headers['x-auth-token']);
-      window.location("/");
+      this.props.history.push("/");
     } catch (error){
       if(error.response && error.response.status === 400){
         const errors = { ...this.state.errors };

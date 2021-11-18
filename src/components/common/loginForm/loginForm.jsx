@@ -1,6 +1,7 @@
 import Joi from 'joi-browser';
 import React, { Component } from 'react';
 import {Link, Redirect} from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../../services/api/auth';
 import "./loginForm.sass";
 
@@ -56,6 +57,7 @@ class LoginForm extends Component {
       if (error.response && error.response.status === 400){
         const errors = {...this.state.errors};
         errors.email = error.response.data;
+        toast.error(error.response.data);
         this.setState({errors});
       }
     }

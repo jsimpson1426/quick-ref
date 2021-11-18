@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
+import ProtectedRoute from "./components/common/protectedRoute/protectedRoute";
 import NavBar from "./components/common/navBar/navBar";
 import ContentList from "./components/quick-ref/contentList/contentList";
 import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
@@ -27,6 +28,10 @@ class App extends Component {
     this.setState({navToggle: false});
   }
 
+  handleToast = (message) => {
+    toast(message);
+  }
+
   render() {
 
     return (
@@ -38,11 +43,11 @@ class App extends Component {
           onRouteChange={this.handleRoute}
         ></NavBar>
         <Switch>
-          <Route
+          <ProtectedRoute
             path="/manageResource/:id"
             render={(props) => <ResourceForm {...props} />}
           />
-          <Route
+          <ProtectedRoute
             path="/viewResource/:id"
             render={(props) => <ViewResource {...props} />}
           />
@@ -58,7 +63,7 @@ class App extends Component {
             path="/register"
             render={(props) => <RegisterForm {...props} />}
           />
-          <Route
+          <ProtectedRoute
             path="/"
             render={(props) => <ContentList {...props} />}
           />
