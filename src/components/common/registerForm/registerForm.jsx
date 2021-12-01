@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Joi from 'joi';
+import { toast } from 'react-toastify';
 
 import { registerUser } from '../../../services/api/register';
 import './registerForm.sass';
@@ -49,7 +50,6 @@ class RegisterForm extends Component {
 
   validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
-    console.log(this.schema);
     const schema = Joi.object({ [name]: this.schema[name] });
     const { error } = schema.validate(obj);
     return error ? error.details[0].message : null;
@@ -72,11 +72,13 @@ class RegisterForm extends Component {
       console.log(response);
       console.log(response.headers['x-auth-token']);
       auth.loginWithJWT(response.headers['x-auth-token']);
-      this.props.history.push("/");
+      const {state} = this.props.location;
+      window.location = state ? state.from.pathname : "/";
     } catch (error){
       if(error.response && error.response.status === 400){
         const errors = { ...this.state.errors };
         errors.username = error.response.data;
+        toast.error(error.response.data);
         this.setState({errors});
       }
     }

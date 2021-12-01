@@ -7,6 +7,7 @@ import Pagination from "../../common/pagination/pagination";
 import FilterSection from "../filterSection/filterSection";
 import {paginate} from "../../../utils/paginate";
 import { getResources, deleteResource } from "../../../services/api/resources";
+import { getCurrentUser } from '../../../services/api/auth';
 
 class ContentList extends Component{
 
@@ -108,6 +109,7 @@ class ContentList extends Component{
   //This function deletes a card.
   handleDelete = async (id) => {
     if(window.confirm("Are you sure you want to delete this resource?")){
+      const initState = [...this.state.cards];
       try{
         let cards = [...this.state.cards];
         cards = cards.filter((card) => card._id !== id);
@@ -115,6 +117,7 @@ class ContentList extends Component{
         await deleteResource(id);
       }catch(err){
         console.log(err);
+        this.setState({ cards: initState });
       }
       
     }
@@ -122,16 +125,20 @@ class ContentList extends Component{
 
   //This function renders a Link Component to manage a resource by id
   renderEdit = (id) => {
-    return <Link to={`/manageResource/${id}`}>Edit</Link>;
+    if(getCurrentUser() && getCurrentUser().isAdmin){
+      return <Link to={`/manageResource/${id}`}>Edit</Link>;
+    }
   };
 
   //This function renders a div that handles deletes given a resource id
   renderDelete = (id) => {
-    return (
-      <div className="dropdown-delete" onClick={() => this.handleDelete(id)}>
-        Delete
-      </div>
-    );
+    if(getCurrentUser() && getCurrentUser().isAdmin){
+      return (
+        <div className="dropdown-delete" onClick={() => this.handleDelete(id)}>
+          Delete
+        </div>
+      );
+    }
   };
 
   handleNavToggle = () => {

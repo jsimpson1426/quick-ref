@@ -5,12 +5,13 @@ import "./myCard.sass";
 import DotMenu from "../dotMenu/dotMenu";
 import TagGroup from "../../quick-ref/tagGroup/tagGroup";
 import { ellipsize } from './../../../utils/ellipsize';
+import { getCurrentUser } from "../../../services/api/auth";
 
 const myCard = ({ buttonText, cardData, items, className, onTagAdd, ...rest }) => {
   return (
     <div className={className ? className + " myCard" : className} {...rest}>
       <div className="header">
-        <DotMenu listItems={items} cardID={cardData._id} className="dot-menu" />
+        {getCurrentUser() && getCurrentUser().isAdmin && <DotMenu listItems={items} cardID={cardData._id} className="dot-menu" />}
         <h4 className="myCard-title">{ellipsize(cardData.title,20)}</h4>
       </div>
       <div className="myCard-body">
