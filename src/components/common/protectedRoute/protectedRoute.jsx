@@ -2,7 +2,8 @@ import React from 'react'
 import auth from '../../../services/api/auth';
 import { Route, Redirect } from 'react-router-dom';
 
-const ProtectedRoute = ({path, component: Component, render, ...rest}) => {
+const ProtectedRoute = ({path, component: Component, render, adminOnly ,...rest}) => {
+    adminOnly = adminOnly ? adminOnly : false;
     return(
         <Route 
             {...rest}
@@ -16,6 +17,9 @@ const ProtectedRoute = ({path, component: Component, render, ...rest}) => {
                             }}
                         />
                     );
+                }
+                if(adminOnly && !auth.getCurrentUser().isAdmin){
+                    return <Redirect to={{ pathname: "/" }} />;
                 }
                 return  Component ? <Component {...props}/> : render(props);
             }}

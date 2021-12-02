@@ -25,7 +25,7 @@ const NavBar = ({ navToggle, onNavToggle, onRouteChange, ...rest }) => {
             </Link>
           </li>
           <li >
-            {getCurrentUser() && getCurrentUser().isAdmin && <Link to="/manageResource/new" onClick={onRouteChange}>Add Resource</Link>}
+            {getCurrentUser() && getCurrentUser().isAdmin && <Link to="/addResource" onClick={onRouteChange}>Add Resource</Link>}
           </li>
           <li >
             {getCurrentUser() ? <Link  to="/logout">Logout</Link> : <Link  to="/login">Login</Link>}

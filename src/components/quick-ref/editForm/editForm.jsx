@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
+
 import "./editForm.sass";
 import { getResource, editResource } from "../../../services/api/resources";
 import { toast } from "react-toastify";
 
 
-class ResourceForm extends Component {
+class EditForm extends Component {
   state = {
     _id: "",
     data: {
@@ -25,15 +26,17 @@ class ResourceForm extends Component {
   };
 
   async componentDidMount() {
-    const resourceId = this.props.match.params.id;
-    const response = await getResource(resourceId);
-    const resource = response.data;
-    if (!resource){
-      toast("Resource not found!");
+    try{
+      const response = await getResource(this.props.match.params.id);
+      const resource = response.data;
+      this.initializeView(resource);
+    }
+    catch(err){
+      toast.error(err.message);
       return this.props.history.replace("/");
     }
-
-    this.initializeView(resource);
+    
+    
   }
 
   initializeView = (resource) => {
@@ -73,13 +76,16 @@ class ResourceForm extends Component {
   };
 
   doSubmit = async () => {
-
-    let dataToSend = {};
-    dataToSend.title = this.state.data.title;
-    dataToSend.description = this.state.data.description;
-    dataToSend.tags = this.state.tags;
-    await editResource(this.state._id, dataToSend);
-    this.props.history.push('/');
+    try{
+      let dataToSend = {};
+      dataToSend.title = this.state.data.title;
+      dataToSend.description = this.state.data.description;
+      dataToSend.tags = this.state.tags;
+      await editResource(this.state._id, dataToSend);
+      this.props.history.push('/');
+    } catch (err){
+      toast.error(err.message);
+    }
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -232,4 +238,4 @@ class ResourceForm extends Component {
   }
 }
 
-export default ResourceForm;
+export default EditForm;

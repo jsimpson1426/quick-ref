@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/common/protectedRoute/protectedRoute";
 import NavBar from "./components/common/navBar/navBar";
 import ContentList from "./components/quick-ref/contentList/contentList";
 import ResourceForm from "./components/quick-ref/resourceForm/resourceForm";
+import EditForm from "./components/quick-ref/editForm/editForm";
 import ViewResource from "./components/quick-ref/viewResource/viewResource";
 import LoginForm from "./components/common/loginForm/loginForm";
 import RegisterForm from "./components/common/registerForm/registerForm";
@@ -44,8 +45,14 @@ class App extends Component {
         ></NavBar>
         <Switch>
           <ProtectedRoute
-            path="/manageResource/:id"
+            path="/addResource"
             render={(props) => <ResourceForm {...props} />}
+            adminOnly={true}
+          />
+          <ProtectedRoute
+            path="/manageResource/:id"
+            render={(props) => <EditForm {...props} />}
+            adminOnly={true}
           />
           <ProtectedRoute
             path="/viewResource/:id"

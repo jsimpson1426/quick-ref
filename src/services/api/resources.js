@@ -42,7 +42,7 @@ export async function editResource(_id, data) {
     form.append("tags", JSON.stringify(tags));
   }
 
-  return await http.put(config.apiEndpoint + "/" + _id, form);
+  return await http.put(config.apiEndpoint + "/resources/" + _id, form);
 }
 
 export async function deleteResource(id) {
