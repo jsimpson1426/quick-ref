@@ -1,13 +1,12 @@
 import http from "./http";
 import FormData from "form-data";
-import config from "./config.json";
 
 export async function getResources() {
-  return await http.get(config.apiEndpoint + "/resources", );
+  return await http.get("/resources", );
 }
 
 export async function getResource(id) {
-  return await http.get(config.apiEndpoint + "/resources/" + id);
+  return await http.get("/resources/" + id);
 }
 
 export async function saveResource(data) {
@@ -27,7 +26,7 @@ export async function saveResource(data) {
   
   form.append("file", fileToUpload);
 
-  return await http.post(config.apiEndpoint + "/resources", form, {headers: headers});
+  return await http.post("/resources", form, {headers: headers});
 }
 
 export async function editResource(_id, data) {
@@ -42,9 +41,9 @@ export async function editResource(_id, data) {
     form.append("tags", JSON.stringify(tags));
   }
 
-  return await http.put(config.apiEndpoint + "/resources/" + _id, form);
+  return await http.put("/resources/" + _id, form);
 }
 
 export async function deleteResource(id) {
-  return await http.delete(config.apiEndpoint + "/resources/" + id);
+  return await http.delete("/resources/" + id);
 }
